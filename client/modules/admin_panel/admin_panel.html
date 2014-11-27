@@ -1,0 +1,9 @@
+<template name="adminPanel">
+	{{#if currentUser}}
+		<h1> logueado</h1>
+		{{#if isInRole 'admin'}}
+			<h2> Y es admin </h2>
+		{{/if}}
+		<button id="logoutbutton">Cerrar sesion</button>
+	{{/if}}
+</template>

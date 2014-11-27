@@ -4,11 +4,10 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 jquery
-bootstrap
 iron:router
 accounts-password
 accounts-base
-
+mizzao:bootstrap-3
+alanning:roles

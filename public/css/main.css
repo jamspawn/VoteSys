@@ -37,6 +37,14 @@ footer p{
 	padding-right: 10px;
 }
 
+#logincontainer{
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+}
+
 #section{
 	position: absolute;
 	top: 150px;

@@ -5,10 +5,14 @@ Router.configure({
 Router.map(function(){
 	this.route('/',{
 		name : 'login'
-	})
+	});
 
 	this.route('/prospectos',{
 		name : 'prospectos'
+	});
+
+	this.route('/panel',{
+		name : 'adminPanel'
 	})
 })
 
