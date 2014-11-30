@@ -43,9 +43,54 @@ footer p{
 	margin-right: auto;
 	left: 0;
 	right: 0;
+	position: absolute;
+}
+
+.menucontainer{
+	margin-top: 50px;
+	margin-left: 10%;
+}
+
+.formcontainer{
+	width: 90%;
+	left: 5%;
+	position: absolute;
 }
 
 #section{
+	height: 100%;
 	position: absolute;
-	top: 150px;
+	top: 100px;
+	width: 100%;
+	margin-bottom: 40px;
+}
+
+#wrapper{
+	position: absolute;
+	top: 100px;
+	width: 100%;
+	height: 80%;
+	padding: 10px;
+}
+
+#adminmenu li a:focus, #adminmenu li a:hover{
+	background: #DDD;
+}
+
+#adminmenu button, #adminmenu a {
+	display: inline;
+}
+
+#adminmenu a {
+	width: 200px;
+	display: inline-block;
+}
+
+#adminmenu{
+	max-width: 300px;
+}
+
+#logoutbutton{
+	position: absolute;
+	bottom: 50px;
 }

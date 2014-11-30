@@ -1,0 +1,58 @@
+<template name="addArea">
+	{{#if currentUser}}
+
+		
+		{{#if isInRole 'admin'}}
+			<div class="formcontainer">
+				<form id="add-area" class="form-horizontal">
+					<fieldset>
+
+					<!-- Form Name -->
+						<legend>Nueva Area</legend>
+
+						<!-- Button Drop Down -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="buttondropdown">Tipo de area</label>
+							<div class="col-md-4">
+								<div class="input-group">
+									<input id="adescription" name="buttondropdown" class="form-control" placeholder="selecciona un tipo" required="" type="text">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+											tipos
+											<span class="caret"></span>
+										</button>
+										<ul id="atype" class="dropdown-menu pull-right">
+											<li id="zona"><a href="#">Zona</a></li>
+											<li id="comu"><a href="#">Comuna</a></li>
+											<li id="loca"><a href="#">Localidad</a></li>
+											<li id="junt"><a href="#">Junta</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="acode">Codigo</label>  
+							<div class="col-md-4">
+								<input id="acode" name="acode" placeholder="ej: 01" class="form-control input-md" required="" type="text">
+
+							</div>
+						</div>
+
+						<!-- Button -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for=""></label>
+							<div class="col-md-4">
+								<button id="" name="" class="btn btn-primary">Crear</button>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+		{{/if}}
+		{{>logoutbtn}}
+	{{/if}}
+</template>

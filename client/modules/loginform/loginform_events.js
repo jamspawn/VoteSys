@@ -1,7 +1,7 @@
 Template.loginform.rendered = function(){
-	var haveuser = Meteor.users.find().count();
-	console.log(haveuser);
-	if (haveuser == 0){
+	//var haveuser = Meteor.users.find().count();
+	//console.log(haveuser);
+	/*if (haveuser == 0){
 		var firstAdmin;
 		firstAdmin = Accounts.createUser({
 	        username: "Techsupp",
@@ -17,7 +17,8 @@ Template.loginform.rendered = function(){
       	});
 
 		Roles.addUsersToRoles(firstAdmin, ['admin','techsup']);
-	}
+	}*/
+	Meteor.call('updateRoles',function(error, result){error, result});
 }
 
 Template.loginform.events({

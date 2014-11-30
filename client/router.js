@@ -13,6 +13,10 @@ Router.map(function(){
 
 	this.route('/panel',{
 		name : 'adminPanel'
+	});
+
+	this.route('/panel/newarea',{
+		name : 'addArea'
 	})
 })
 
