@@ -8,9 +8,11 @@ Template.adminNav.events({
 		}
 		else if(elemento == 'mcolab'){
 			//alert('agregaras un colaborador');
+			Router.go('addColaborator');
 		}
 		else{
 			//alert('agregaras un prospecto');
+			Router.go('addProspect');
 		}
 	}
 })

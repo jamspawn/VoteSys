@@ -3,5 +3,9 @@ Meteor.publish(null, function (){
 })
 
 Meteor.publish('areas', function(){
-  return Meteor.areas.find();
+  return Areas.find();
+});
+
+Meteor.publish('colaboradores', function(){
+  return Colaboradores.find();
 });

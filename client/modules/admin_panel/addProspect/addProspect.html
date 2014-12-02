@@ -1,18 +1,18 @@
-<template name="addArea">
+<template name="addProspect">
 	{{#if currentUser}}
 
 		
 		{{#if isInRole 'admin'}}
 			<div class="formcontainer">
-				<form id="add-area" class="form-horizontal">
+				<form id="add-col" class="form-horizontal">
 					<fieldset>
 
 					<!-- Form Name -->
-						<legend>Nueva Area</legend>
+						<legend>Nuevo Colaborador</legend>
 
 						<!-- Button Drop Down -->
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="buttondropdown">Tipo de area</label>
+							<label class="col-md-4 control-label" for="buttondropdown">Colaborador</label>
 							<div class="col-md-4">
 								<div class="input-group">
 									<input id="adescription" name="buttondropdown" class="form-control" placeholder="selecciona un tipo" required="" type="text">

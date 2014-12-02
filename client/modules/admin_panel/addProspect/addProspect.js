@@ -1,4 +1,4 @@
-Template.addArea.events({
+Template.addProspect.events({
 	'click #atype li' : function(e){
 		var valor = $('#'+e.currentTarget.id).find('a').html();
 		$('#adescription').val(valor);
@@ -47,6 +47,6 @@ Template.addArea.events({
 
 })
 
-Template.addArea.rendered = function(){
-	Meteor.subscribe('areas');
+Template.addProspect.rendered = function(){
+	Meteor.subscribe('colaboradores');
 }

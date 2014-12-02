@@ -1,7 +1,8 @@
-Template.addArea.events({
-	'click #atype li' : function(e){
+Template.addColaborator.events({
+	'click #ctype li' : function(e){
 		var valor = $('#'+e.currentTarget.id).find('a').html();
-		$('#adescription').val(valor);
+		console.log(valor)
+		$('#cdescription').val(valor);
 	},
 	'submit #add-area' : function(e){
 		e.preventDefault();
@@ -47,6 +48,6 @@ Template.addArea.events({
 
 })
 
-Template.addArea.rendered = function(){
-	Meteor.subscribe('areas');
+Template.addColaborator.rendered = function(){
+	Meteor.subscribe('colaboradores');
 }

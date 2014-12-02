@@ -17,6 +17,14 @@ Router.map(function(){
 
 	this.route('/panel/newarea',{
 		name : 'addArea'
+	});
+
+	this.route('/panel/newcolaborator',{
+		name : 'addColaborator'
+	});
+
+	this.route('/panel/newProspect',{
+		name : 'addProspect'
 	})
 })
 

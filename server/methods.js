@@ -50,28 +50,11 @@ Meteor.methods({
   	return 'Esto se llama desde server '+hello;
   },
 
-  addNewArea: function(obj){
-  	var loggedInUser = Meteor.user()
-
-    if (loggedInUser) {
-    	if (Roles.userIsInRole(loggedInUser, ['admin','techsup'])) {
-    		var ae = Areas.find({descripcion:obj.desc, codigo:obj.cod}).count();
-    		if(ae == 0){
-				Areas.insert({
-					descripcion: obj.desc,
-					codigo: obj.cod
-				});
-				return '1' //area creada
-			}
-			else{
-				return '2' // area ya existia;
-			}
-	    }
-      
-    }
-    else{
-    	throw new Meteor.Error(403, "Access denied")
-    }
-  	
+  añadiendoRol: function(user){
+  	if (user.roles.length > 0) {
+	    // Need _id of existing user record so this call must come 
+	    // after `Accounts.createUser` or `Accounts.onCreate`
+	    Roles.addUsersToRoles(id, user.roles);
+	  }
   }
 })

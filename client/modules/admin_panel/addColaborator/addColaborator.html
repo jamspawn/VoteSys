@@ -1,0 +1,144 @@
+<template name="addColaborator">
+	{{#if currentUser}}
+
+			<div class="formcontainer">
+				<form class="form-horizontal">
+					<fieldset>
+
+						<!-- Form Name -->
+						<legend>Nuevo Colaborador</legend>
+
+						<!-- Button Drop Down -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="buttondropdown">Tipo Colaborador</label>
+						  <div class="col-md-4">
+						    <div class="input-group">
+						      <input id="cdescription" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
+						      <div class="input-group-btn">
+						        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						          tipos
+						          <span class="caret"></span>
+						        </button>
+						        <ul id="ctype" class="dropdown-menu pull-right">
+						        	{{#if isInRole 'admin'}}
+						          		<li id="lzo"><a href="#">Lider Zona</a></li>
+						          	{{/if}}
+						          	{{#if isInRole 'jefe-zona'}}
+						         		<li id="lco"><a href="#">Lider Comuna</a></li>
+						          	{{/if}}
+						          	{{#if isInRole 'lider-comuna'}}
+						          		<li id="lcu"><a href="#">Lider Cuadrante</a></li>
+						          	{{/if}}
+						        </ul>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="Cédula">C.C.</label>  
+							<div class="col-md-4">
+								<input id="cedula" name="cedula" placeholder="cedula" class="form-control input-md" required="" type="text">
+
+							</div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="cacode">Codigo de acceso</label>  
+						  <div class="col-md-4">
+						  <input id="cacode" name="cacode" placeholder="codigo" class="form-control input-md" required="" type="text">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="email">e-mail</label>  
+						  <div class="col-md-4">
+						  <input id="email" name="email" placeholder="correo" class="form-control input-md" type="email">
+						    
+						  </div>
+						</div>
+
+
+						<!-- Button Drop Down -->
+
+						{{#if isInRole 'lider-comuna'}}
+							<!-- Button Drop Down -->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="buttondropdown">Cuadrante</label>
+								<div class="col-md-4">
+									<div class="input-group">
+										<input id="buttondropdown" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+												cuadrantes
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu pull-right">
+												<li><a href="#">Option one</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						{{/if}}
+
+						{{#if isInRole 'admin'}}
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="buttondropdown">Zona</label>
+								<div class="col-md-4">
+									<div class="input-group">
+										<input id="buttondropdown" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+												Zonas
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu pull-right czona">
+												<li><a href="#">Option one</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						{{/if}}
+
+						{{#if isInRole 'jefe-zona'}}
+							<!-- Button Drop Down -->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="buttondropdown">Comuna</label>
+								<div class="col-md-4">
+									<div class="input-group">
+										<input id="buttondropdown" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+												comunas
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu pull-right">
+												<li><a href="#">Option one</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						{{/if}}
+
+						<!-- Button -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="singlebutton"></label>
+							<div class="col-md-4">
+								<button id="singlebutton" name="singlebutton" class="btn btn-primary">Crear</button>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+
+			</div>
+		{{>logoutbtn}}
+	{{/if}}
+</template>
