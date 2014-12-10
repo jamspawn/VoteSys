@@ -56,5 +56,37 @@ Meteor.methods({
 	    // after `Accounts.createUser` or `Accounts.onCreate`
 	    Roles.addUsersToRoles(id, user.roles);
 	  }
+  },
+
+  addColaborator: function(user){
+  	var loggedInUser = Meteor.user()
+
+    if (!loggedInUser) {
+      throw new Meteor.Error(403, "Access denied")
+    }
+    else{
+    	var id = Accounts.createUser({
+		  	username : user.cc,
+		    email: user.email,
+		    password: user.keyp,
+		    profile: { 
+		    	updated: false,
+		    	keyp : user.keyp,
+				tipo :user.tip,
+				cc :user.cc,
+				email :user.email,
+				zona :user.zone,
+				comu :user.comu,
+				cuad :user.squa
+		    }
+		});
+
+		Email.send({
+			from: "JuanPabloGalloStaff@JPG.com",
+			to: user.email,
+			subject: "Acceso plataforma",
+			text: "Por favor ingresa a votesys.meteor.com con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
+		});
+    }
   }
 })

@@ -2,7 +2,7 @@
 	{{#if currentUser}}
 
 			<div class="formcontainer">
-				<form class="form-horizontal">
+				<form id="add-col" class="form-horizontal">
 					<fieldset>
 
 						<!-- Form Name -->
@@ -13,7 +13,7 @@
 						  <label class="col-md-4 control-label" for="buttondropdown">Tipo Colaborador</label>
 						  <div class="col-md-4">
 						    <div class="input-group">
-						      <input id="cdescription" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
+						      <input id="ctypei" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
 						      <div class="input-group-btn">
 						        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						          tipos
@@ -44,14 +44,6 @@
 							</div>
 						</div>
 
-						<!-- Text input-->
-						<div class="form-group">
-						  <label class="col-md-4 control-label" for="cacode">Codigo de acceso</label>  
-						  <div class="col-md-4">
-						  <input id="cacode" name="cacode" placeholder="codigo" class="form-control input-md" required="" type="text">
-						    
-						  </div>
-						</div>
 
 						<!-- Text input-->
 						<div class="form-group">
@@ -62,70 +54,8 @@
 						  </div>
 						</div>
 
-
-						<!-- Button Drop Down -->
-
-						{{#if isInRole 'lider-comuna'}}
-							<!-- Button Drop Down -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="buttondropdown">Cuadrante</label>
-								<div class="col-md-4">
-									<div class="input-group">
-										<input id="buttondropdown" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-												cuadrantes
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu pull-right">
-												<li><a href="#">Option one</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						{{/if}}
-
-						{{#if isInRole 'admin'}}
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="buttondropdown">Zona</label>
-								<div class="col-md-4">
-									<div class="input-group">
-										<input id="buttondropdown" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-												Zonas
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu pull-right czona">
-												<li><a href="#">Option one</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						{{/if}}
-
-						{{#if isInRole 'jefe-zona'}}
-							<!-- Button Drop Down -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="buttondropdown">Comuna</label>
-								<div class="col-md-4">
-									<div class="input-group">
-										<input id="buttondropdown" name="buttondropdown" class="form-control" placeholder="seleccionar..." type="text">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-												comunas
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu pull-right">
-												<li><a href="#">Option one</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						{{/if}}
+						{{> UI.dynamic template=isType}}
+						
 
 						<!-- Button -->
 						<div class="form-group">

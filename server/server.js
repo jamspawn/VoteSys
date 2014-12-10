@@ -1,0 +1,1 @@
+process.env.MAIL_URL="smtp://JuanPabloGalloTeam%40gmail.com:juanpablo12345@smtp.gmail.com:465/"; 

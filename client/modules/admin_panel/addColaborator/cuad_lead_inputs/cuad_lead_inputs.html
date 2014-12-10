@@ -1,0 +1,34 @@
+<template name="cuad_lead_inputs">
+	<!-- Select Basic -->
+	<div class="control-group">
+	  <label class="control-label" for="czone">Zona</label>
+	  <div class="controls">
+	    <select id="czone" name="czone" required class="input-medium">
+	    	<option disabled selected> -- Selecciona una zona -- </option>
+	      {{#each zonas}}
+	      	<option value="{{this.codigo}}">{{this.descripcion}} - {{this.codigo}}</option>
+	      {{/each}}}}
+	    </select>
+	  </div>
+	</div>
+
+	<!-- Select Basic -->
+	<div class="control-group">
+	  <label class="control-label" for="ccomu">Comuna</label>
+	  <div class="controls">
+	    <select id="ccomu" name="ccomu" required class="input-medium">
+	      <option disabled selected> -- Selecciona una comuna -- </option>
+	    </select>
+	  </div>
+	</div>
+
+	<!-- Select Basic -->
+	<div class="control-group">
+	  <label class="control-label" for="ccuad">Cuadrante</label>
+	  <div class="controls">
+	    <select id="ccuad" name="ccuad" required class="input-medium">
+	      <option disabled selected> -- Selecciona un cuadrante -- </option>
+	    </select>
+	  </div>
+	</div>
+</template>
