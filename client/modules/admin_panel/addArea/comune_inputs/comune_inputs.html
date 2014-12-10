@@ -1,0 +1,34 @@
+<template name="comune_inputs">
+	<!-- Text input-->
+	<div class="control-group">
+	  <label class="control-label" for="code">Codigo</label>
+	  <div class="controls">
+	    <input id="acode" name="acode" placeholder="ej: 01" class="input-medium" required type="text">
+	    
+	  </div>
+	</div>
+
+	<!-- Text input-->
+	<div class="control-group">
+	  <label class="control-label" for="descripcion">Descripcion Comuna</label>
+	  <div class="controls">
+	    <input id="adesc" name="adesc" placeholder="ej: nombre del area" class="input-medium" required type="text">
+	    
+	  </div>
+	</div>
+
+	<!-- Select Basic -->
+	<div class="control-group">
+	  <label class="control-label" for="aczone">Zona</label>
+	  <div class="controls">
+	    <select id="aczone" name="aczone" required class="input-medium">
+	    	<option disabled selected> -- Selecciona una zona -- </option>
+	      {{#each zonas}}
+	      	<option value="{{this.codigo}}">{{this.descripcion}} - {{this.codigo}}</option>
+	      {{/each}}}}
+	    </select>
+	  </div>
+	</div>
+	<input id="accomu" type="hidden" value=''>
+
+</template>

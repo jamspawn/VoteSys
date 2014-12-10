@@ -15,7 +15,7 @@
 							<label class="col-md-4 control-label" for="buttondropdown">Tipo de area</label>
 							<div class="col-md-4">
 								<div class="input-group">
-									<input id="adescription" name="buttondropdown" class="form-control" placeholder="selecciona un tipo" required="" type="text">
+									<input id="atypei" name="buttondropdown" class="form-control" placeholder="selecciona un tipo" required="" type="text">
 									<div class="input-group-btn">
 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 											tipos
@@ -31,14 +31,16 @@
 							</div>
 						</div>
 
-						<!-- Text input-->
-						<div class="form-group">
-							<label class="col-md-4 control-label" for="acode">Codigo</label>  
-							<div class="col-md-4">
-								<input id="acode" name="acode" placeholder="ej: 01" class="form-control input-md" required="" type="text">
+						{{> UI.dynamic template=isType}}
+						<!--<div class="formtype" id="dzone">
 
-							</div>
 						</div>
+						<div class="formtype" id="dcomu">
+
+						</div>
+						<div class="formtype" id="dloca">
+
+						</div>-->
 
 						<!-- Button -->
 						<div class="form-group">
