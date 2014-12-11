@@ -25,6 +25,10 @@ Router.map(function(){
 
 	this.route('/panel/newProspect',{
 		name : 'addProspect'
+	});
+
+	this.route('/panel/Welcome',{
+		name : 'firstTimeAcces'
 	})
 })
 

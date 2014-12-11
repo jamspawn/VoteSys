@@ -1,11 +1,8 @@
 <template name="adminPanel">
 	{{#if currentUser}}
 
-		
-		{{#if isInRole 'admin'}}
 			{{>adminNav}}
 			
-		{{/if}}
 		{{>logoutbtn}}
 	{{/if}}
 </template>
