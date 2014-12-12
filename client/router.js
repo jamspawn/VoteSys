@@ -29,6 +29,18 @@ Router.map(function(){
 
 	this.route('/panel/Welcome',{
 		name : 'firstTimeAcces'
+	});
+
+	this.route('/panel/listprospects',{
+		name : 'listProspects'
+	});
+
+	this.route('/panel/listareass',{
+		name : 'listAreas'
+	});
+
+	this.route('/panel/listcolaborators',{
+		name : 'listColaborators'
 	})
 })
 

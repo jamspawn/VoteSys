@@ -16,10 +16,10 @@ Meteor.methods({
     Roles.addUsersToRoles(targetUserId, roles);*/
 
     var users = [
-		    {name:"Techsup",email:"alejandro@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador']},
-		    {name:"Techsup2",email:"giovanni@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador']},
-		    {name:"Ghost",email:"ghost@votesys.com" ,pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador']},
-		    {name:"TesUser",email:"test@votesys.com" ,pass:"12345" , roles:['Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador']}
+		    {name:"Techsup",email:"alejandro@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
+		    {name:"Techsup2",email:"giovanni@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
+		    {name:"Ghost",email:"ghost@votesys.com" ,pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
+		    {name:"TesUser",email:"test@votesys.com" ,pass:"12345" , roles:['Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'prueba'}
 		];
 		
 		_.each(users, function (user) {
@@ -72,12 +72,12 @@ Meteor.methods({
 		    profile: { 
 		    	updated: false,
 		    	keyp : user.keyp,
-				tipo :user.tip,
-				cc :user.cc,
-				email :user.email,
-				zona :user.zone,
-				comu :user.comu,
-				cuad :user.squa
+  				tipo :user.tip,
+  				cc :user.cc,
+  				email :user.email,
+  				zona :user.zone,
+  				comu :user.comu,
+  				cuad :user.squa
 		    }
 		});
 
@@ -92,14 +92,14 @@ Meteor.methods({
 
   updateUser: function(data){
   	var uId = Meteor.userId()
-	var userData = Meteor.users.find({_id:uId}).fetch();
+	   var userData = Meteor.users.find({_id:uId}).fetch();
   	var tempProfile = userData[0].profile;
   	var newProfile = {
   		nombres: data.name,
-		apellidos: data.lname,
-		direccion: data.addr,
-		telefono: data.phon,
-		celular: data.mobi
+  		apellidos: data.lname,
+  		direccion: data.addr,
+  		telefono: data.phon,
+  		celular: data.mobi
   	}
 
   	Meteor.users.update({_id:Meteor.userId()},{ $unset : {'profile.keyp':''}});
@@ -132,16 +132,55 @@ Meteor.methods({
   	Roles.addUsersToRoles(uId, roles);
 
   	Email.send({
-		from: "JuanPabloGalloStaff@JPG.com",
-		to: tempProfile.email,
-		subject: "Actualizacion de datos",
-		text: "Actualizacion completada:\n Ahora puedes acceder al sistema con los siguientes datos \n usuario -> "+data.user+"\n  password -> "+data.pass+"\n Y actualiza tu información."
-	});
+  		from: "JuanPabloGalloStaff@JPG.com",
+  		to: tempProfile.email,
+  		subject: "Actualizacion de datos",
+  		text: "Actualizacion completada:\n Ahora puedes acceder al sistema con los siguientes datos \n usuario -> "+data.user+"\n  password -> "+data.pass+"\n Y actualiza tu información."
+  	});
   	//Meteor.users.update({_id:uId},{});
   },
 
   fixingTechsupp:function(userId){
-  	var roles = ['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'];
+  	var roles = ['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador','Test'];
   	Roles.setUserRoles(userId, roles);
+  },
+
+  addProspects: function(data){
+    var user = Meteor.users.find({_id : Meteor.userId()}).fetch();
+
+    data.zona = user[0].profile.zona;
+    data.comu = user[0].profile.comu;
+    data.cuad = user[0].profile.cuad;
+    data.addedby = user[0].profile.cc;
+
+    var exist = Prospectos.find({cedula:data.cc}).count();
+    if(exist>0){
+      throw new Meteor.Error(500, "Registrado con esta cedula");
+    }
+    else{
+      Prospectos.insert({
+        categoria: data.cate,
+        nombres: data.name,
+        apellidos: data.lname,
+        cedula: data.cc,
+        email: data.mail,
+        direccion: data.addr,
+        telefono: data.phon,
+        celular: data.mobil,
+        ocupacion: data.prof,
+        matricula: data.matr,
+        zona: data.zona,
+        comuna: data.comu,
+        cuadrante: data.cuad,
+        creadoPor: data.addedby,
+        longitud: data.longi,
+        latitud: data.latit,
+        notas: data.notas
+
+      });
+
+      return 'Creado con exito'
+    }
+
   }
 })

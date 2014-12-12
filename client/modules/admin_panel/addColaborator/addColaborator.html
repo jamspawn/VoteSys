@@ -20,15 +20,16 @@
 						          <span class="caret"></span>
 						        </button>
 						        <ul id="ctype" class="dropdown-menu pull-right">
-						        	{{#if isInRole 'admin'}}
+						        	{{#if isInRole 'admin,techsup'}}
 						          		<li id="lzo"><a href="#">Lider Zona</a></li>
 						          	{{/if}}
-						          	{{#if isInRole 'Lider Zona'}}
+									{{#if isInRole 'admin,techsup,Lider Zona'}}
 						         		<li id="lco"><a href="#">Lider Comuna</a></li>
-						          	{{/if}}
-						          	{{#if isInRole 'Lider Comuna'}}
+						         	{{/if}}
+									{{#if isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
 						          		<li id="lcu"><a href="#">Lider Cuadrante</a></li>
 						          	{{/if}}
+
 						        </ul>
 						      </div>
 						    </div>

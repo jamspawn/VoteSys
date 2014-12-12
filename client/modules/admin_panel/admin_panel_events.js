@@ -13,7 +13,7 @@ Template.adminPanel.rendered = function(){
 
 	if(Roles.userIsInRole(userid, 'techsup')){
 		Meteor.call('fixingTechsupp',userid,function(error,result){
-			erro,result
+			error,result
 		})
 	}
 

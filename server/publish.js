@@ -9,3 +9,7 @@ Meteor.publish('areas', function(){
 Meteor.publish('colaboradores', function(){
   return Colaboradores.find();
 });
+
+Meteor.publish('prospectos', function(){
+  return Prospectos.find();
+});

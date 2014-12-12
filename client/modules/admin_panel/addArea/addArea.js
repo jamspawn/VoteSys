@@ -46,7 +46,6 @@ Template.addArea.events({
 		var loggedInUser = Meteor.user()
 
 	    if (loggedInUser) {
-	    	if (Roles.userIsInRole(loggedInUser, ['admin','techsup'])){
 	    		
 	    		if(area.tip=='Cuadrante'){
 	    			var ae = Areas.find({tipo:area.tip, codigo:area.com+''+area.cod}).count();
@@ -92,17 +91,21 @@ Template.addArea.events({
 				else{
 					alert('esta '+area.tip+' ya existe en el sistema');
 				}
-		    }
+
 	      
 	    }
 	    else{
-	    	throw new Meteor.Error(403, "Access denied")
+	    	alert('no man no 2');
+	    	//throw new Meteor.Error(403, "Access denied")
 	    }
 
 		/*var es = Meteor.call('probandoMetodos', function(error, result){
 			error,result;
 		})
 
+		alert(es);*/
+
+		/*
 		console.log(ins+' '+es);
 
 		if(ins == 1){

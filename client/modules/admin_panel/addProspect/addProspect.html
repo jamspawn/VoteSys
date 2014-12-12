@@ -1,57 +1,140 @@
 <template name="addProspect">
 	{{#if currentUser}}
 
-		
-		{{#if isInRole 'admin'}}
 			<div class="formcontainer">
-				<form id="add-col" class="form-horizontal">
+				<form id="addNewProspect" class="form-horizontal">
 					<fieldset>
 
 					<!-- Form Name -->
-						<legend>Nuevo Colaborador</legend>
+						<legend>Añadir Prospecto</legend>
 
-						<!-- Button Drop Down -->
-						<div class="form-group">
-							<label class="col-md-4 control-label" for="buttondropdown">Colaborador</label>
-							<div class="col-md-4">
-								<div class="input-group">
-									<input id="adescription" name="buttondropdown" class="form-control" placeholder="selecciona un tipo" required="" type="text">
-									<div class="input-group-btn">
-										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-											tipos
-											<span class="caret"></span>
-										</button>
-										<ul id="atype" class="dropdown-menu pull-right">
-											<li id="zona"><a href="#">Zona</a></li>
-											<li id="comu"><a href="#">Comuna</a></li>
-											<li id="loca"><a href="#">Cuadrante</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
+						<!-- Select Basic -->
+						<div class="control-group">
+						  <label class="control-label" for="ptip">Categoria</label>
+						  <div class="controls">
+						    <select id="ptip" name="ptip" required class="input-medium">
+						    	<option disabled selected> -- Selecciona una Categoria -- </option>
+						      	<option value="amigos">Amigos</option>
+						      	<option value="amigos">Vecinos</option>
+						      	<option value="amigos">Familiares</option>
+						      	<option value="amigos">Compañero de trabajo</option>
+						      	<option value="amigos">Compañero estudio</option>
+						      	<option value="amigos">Colegas</option>
+						      	<option value="amigos">Otro</option>
+						    </select>
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="pname">Nombres</label>
+						  <div class="controls">
+						    <input id="pname" name="pname" placeholder="" class="input-large" required="" type="text">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="plname">Apellidos</label>
+						  <div class="controls">
+						    <input id="plname" name="plname" placeholder="" class="input-large" required="" type="text">
+						    
+						  </div>
 						</div>
 
 						<!-- Text input-->
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="acode">Codigo</label>  
+							<label class="col-md-4 control-label" for="pcedula">C.C.</label>  
 							<div class="col-md-4">
-								<input id="acode" name="acode" placeholder="ej: 01" class="form-control input-md" required="" type="text">
+								<input id="pcedula" name="pcedula" placeholder="pcedula" class="form-control input-md" required="" type="text">
 
 							</div>
 						</div>
 
-						<!-- Button -->
+
+						<!-- Text input-->
 						<div class="form-group">
-							<label class="col-md-4 control-label" for=""></label>
-							<div class="col-md-4">
-								<button id="" name="" class="btn btn-primary">Crear</button>
-							</div>
+						  <label class="col-md-4 control-label" for="pemail">e-mail</label>  
+						  <div class="col-md-4">
+						  <input id="pemail" name="pemail" placeholder="example@email.com" class="form-control input-md" type="email">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="paddres">Direccion</label>
+						  <div class="controls">
+						    <input id="paddres" name="paddres" placeholder="" class="input-large" required="" type="text">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="pphone">Telefono</label>
+						  <div class="controls">
+						    <input id="pphone" name="pphone" placeholder="3xxxxxx" class="input-small" required="" type="text">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="pmobile">Celular</label>
+						  <div class="controls">
+						    <input id="pmobile" name="pmobile" placeholder="3xxxxxxxxx" class="input-medium" type="text">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="uname">Ocupacion</label>
+						  <div class="controls">
+						    <input id="pocu" name="pocu" placeholder="Profesion o empleo" class="input-large" required="" type="text">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="pmat">Matricula</label>
+						  <div class="controls">
+						    <input id="pmat" name="pmat" placeholder="" class="input-large" required="" type="text">
+						    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<!--<div class="control-group">
+						  <label class="control-label" for="pcoo">Coordenada</label>
+						  <div class="controls">
+						    <input id="pcoo" name="pcoo" placeholder="" class="input-large" required="" type="text">
+						    
+						  </div>
+						</div>-->
+
+						<!-- Textarea input-->
+						<div class="control-group">
+						  <label class="control-label" for="pnotif">Notas</label>
+						  <div class="controls">                     
+						    <textarea id="pnotif" placeholder="Detalles adicionales..." name="pnotif"></textarea>
+						  </div>
+						</div>
+
+						<!-- Button -->
+						<div class="control-group">
+						  <label class="control-label" for="usend"></label>
+						  <div class="controls">
+						    <button id="usend" name="usend" class="btn btn-info">Ingresar</button>
+						  </div>
 						</div>
 
 					</fieldset>
 				</form>
 			</div>
-		{{/if}}
 		{{>logoutbtn}}
 	{{/if}}
 </template>

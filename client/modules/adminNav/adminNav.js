@@ -14,5 +14,22 @@ Template.adminNav.events({
 			//alert('agregaras un prospecto');
 			Router.go('addProspect');
 		}
+	},
+
+	'click a': function(e){
+		e.preventDefault();
+		var list = $(e.currentTarget).parent().find('button').attr('value');
+		if(list == 'marea'){
+			//alert('agregaras un area');
+			Router.go('listAreas');
+		}
+		else if(list == 'mcolab'){
+			//alert('agregaras un colaborador');
+			Router.go('listColaborators');
+		}
+		else{
+			//alert('veamos prospectos');
+			Router.go('listProspects');
+		}
 	}
 })

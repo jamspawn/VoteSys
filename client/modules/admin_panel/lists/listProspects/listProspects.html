@@ -1,0 +1,32 @@
+<template name="listProspects">
+	{{#if currentUser}}
+
+		<table data-url="data1.json" data-height="299" data-click-to-select="true">
+		    <thead>
+		        <tr>
+		            <th data-field="state" data-checkbox="true"></th>
+		            <th data-field="name" data-align="right">Nombres</th>
+		            <th data-field="lname" data-align="center">Apellidos</th>
+		            <th data-field="cc" data-align="">Cedula</th>
+		            <th data-field="mobile" data-align="">celular</th>
+		            <th data-field="email" data-align="">e-mail</th>
+		            <th data-field="view" data-align="">+</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	{{#each prospectos}}
+			    	<tr>
+			            <td data-field="state" data-checkbox="false"></td>
+			            <td data-field="name" data-align="right">{{this.nombres}}</td>
+			            <td data-field="lname" data-align="center">{{this.apellidos}}</td>
+			            <td data-field="cc" data-align="">{{this.cedula}}</td>
+			            <td data-field="mobile" data-align="">{{this.celular}}</td>
+			            <td data-field="email" data-align="">{{this.email}}</td>
+			            <td data-field="view" data-align="">+</td>
+			        </tr>
+			    {{/each}}
+		    </tbody>
+		</table>
+		
+	{{/if}}
+</template>

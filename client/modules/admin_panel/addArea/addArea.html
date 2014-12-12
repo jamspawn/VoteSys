@@ -1,8 +1,6 @@
 <template name="addArea">
 	{{#if currentUser}}
 
-		
-		{{#if isInRole 'admin'}}
 			<div class="formcontainer">
 				<form id="add-area" class="form-horizontal">
 					<fieldset>
@@ -22,9 +20,15 @@
 											<span class="caret"></span>
 										</button>
 										<ul id="atype" class="dropdown-menu pull-right">
-											<li id="zona"><a href="#">Zona</a></li>
-											<li id="comu"><a href="#">Comuna</a></li>
-											<li id="loca"><a href="#">Cuadrante</a></li>
+											{{#if isInRole 'admin,techsup'}}
+												<li id="zona"><a href="#">Zona</a></li>
+											{{/if}}
+											{{#if isInRole 'admin,techsup,Lider Zona'}}
+												<li id="comu"><a href="#">Comuna</a></li>
+											{{/if}}
+											{{#if isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
+												<li id="loca"><a href="#">Cuadrante</a></li>
+											{{/if}}
 										</ul>
 									</div>
 								</div>
@@ -53,7 +57,6 @@
 					</fieldset>
 				</form>
 			</div>
-		{{/if}}
 		{{>logoutbtn}}
 	{{/if}}
 </template>
