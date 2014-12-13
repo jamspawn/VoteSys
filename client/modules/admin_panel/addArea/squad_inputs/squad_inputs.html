@@ -1,27 +1,27 @@
 <template name="squad_inputs">
 	<!-- Text input-->
-	<div class="control-group">
-	  <label class="control-label" for="code">Codigo</label>
-	  <div class="controls">
-	    <input id="acode" name="acode" placeholder="ej: 01" class="input-medium" required type="text">
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="code">Codigo</label>
+	  <div class="col-md-1 controls">
+	    <input id="acode" name="acode" placeholder="ej: 01" class="form-control input-medium" required type="text">
 	    
 	  </div>
 	</div>
 
 	<!-- Text input-->
-	<div class="control-group">
-	  <label class="control-label" for="descripcion">Descripcion Cuadrante</label>
-	  <div class="controls">
-	    <input id="adesc" name="adesc" placeholder="ej: nombre del area" class="input-medium" required type="text">
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="descripcion">Descripcion Cuadrante</label>
+	  <div class="col-md-2 controls">
+	    <input id="adesc" name="adesc" placeholder="ej: nombre del area" class="form-control input-medium" required type="text">
 	    
 	  </div>
 	</div>
 
 	<!-- Select Basic -->
-	<div class="control-group">
-	  <label class="control-label" for="aczone">Zona</label>
-	  <div class="controls">
-	    <select id="aczone" name="aczone" required class="input-medium">
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="aczone">Zona</label>
+	  <div class="col-md-2 controls">
+	    <select id="aczone" name="aczone" required class="form-control input-medium">
 	    	<option disabled selected> -- Selecciona una zona-- </option>
 	      {{#each zonas}}
 	      	<option value="{{this.codigo}}">{{this.descripcion}} - {{this.codigo}}</option>
@@ -31,10 +31,10 @@
 	</div>
 
 	<!-- Select Basic -->
-	<div class="control-group">
-	  <label class="control-label" for="accomu">Comuna</label>
-	  <div class="controls">
-	    <select id="accomu" name="accomu" required class="input-medium">
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="accomu">Comuna</label>
+	  <div class="col-md-2 controls">
+	    <select id="accomu" name="accomu" required class="form-control input-medium">
 	    	<option disabled selected> -- Selecciona una comuna -- </option>
 	    </select>
 	  </div>

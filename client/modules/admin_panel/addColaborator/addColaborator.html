@@ -6,7 +6,7 @@
 					<fieldset>
 
 						<!-- Form Name -->
-						<legend>Nuevo Colaborador</legend>
+						<legend class="form-title">Nuevo Colaborador</legend>
 
 						<!-- Button Drop Down -->
 						<div class="form-group">
@@ -38,8 +38,8 @@
 
 						<!-- Text input-->
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="Cédula">C.C.</label>  
-							<div class="col-md-4">
+							<label class="col-md-4 control-label" for="cedula">C.C.</label>  
+							<div class="col-md-2">
 								<input id="cedula" name="cedula" placeholder="cedula" class="form-control input-md" required="" type="text">
 
 							</div>
@@ -49,7 +49,7 @@
 						<!-- Text input-->
 						<div class="form-group">
 						  <label class="col-md-4 control-label" for="email">e-mail</label>  
-						  <div class="col-md-4">
+						  <div class="col-md-3">
 						  <input id="email" name="email" placeholder="correo" class="form-control input-md" type="email">
 						    
 						  </div>
@@ -70,6 +70,5 @@
 				</form>
 
 			</div>
-		{{>logoutbtn}}
 	{{/if}}
 </template>

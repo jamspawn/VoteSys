@@ -1,5 +1,8 @@
 <template name="header">
 	<header id="header">
 		<h1>JUAN PABLO GALLO</h1>
+		{{#if currentUser}}
+			{{>logoutbtn}}
+		{{/if}}
 	</header>
 </template>

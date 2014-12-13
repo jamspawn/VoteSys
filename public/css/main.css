@@ -1,11 +1,9 @@
 body{
-	background : #EEE;
+	background : #555;
 }
 
 header{
-	position : absolute;
-	top: 0;
-	left: 0;
+	position : relative;
 	width: 100%;
 	height: 100px;
 	background: #FF0000;
@@ -18,10 +16,12 @@ header h1{
 	width: 100%;
 	text-align: center;
 	font-size: 2em;
+	margin-top: 0;
+	padding-top: 30px;
 }
 
 footer{
-	position : absolute;
+	position : fixed;
 	bottom: 0;
 	left: 0;
 	width: 100%;
@@ -42,20 +42,20 @@ footer p{
 	width: 300px;
 	margin-left: auto;
 	margin-right: auto;
-	left: 0;
-	right: 0;
-	position: absolute;
 }
 
 .menucontainer{
 	margin-top: 50px;
-	margin-left: 10%;
 }
 
 .formcontainer{
-	width: 90%;
+	width: 100%;
 	left: 5%;
 	/*position: absolute;*/
+}
+
+.formcontainer label{
+	font-size: 1em;
 }
 
 #section{
@@ -67,12 +67,9 @@ footer p{
 }
 
 #wrapper{
-	position: absolute;
-	top: 100px;
+	position: relative;
 	width: 100%;
-	height: 70%;
 	padding: 10px;
-	overflow-y: scroll; 
 }
 
 #adminmenu li a:focus, #adminmenu li a:hover{
@@ -86,13 +83,47 @@ footer p{
 #adminmenu a {
 	width: 200px;
 	display: inline-block;
+	text-align: left;
+	font-size: 1.5em;
+}
+
+#adminmenu span{
+	font-size: 1.5em;
 }
 
 #adminmenu{
-	max-width: 300px;
+	max-width: 100%;
+	text-align: center;
 }
 
-#logoutbutton{
-	/*position: absolute;*/
-	bottom: 50px;
+#logoutbutton {
+    bottom: 50px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#pnotif{
+	height: 150px;
+}
+
+.panel{
+	max-width:1000px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+}
+
+.td-options .btn{
+	padding: 10px 10px;
+	font-size: 10px;
+}
+
+.form-title{
+	font-size: 2em;
+	color:#333;
+	font-weight: bolder;
+	border-width: 0px 0px 2px;
+	border-style: none none solid;
+	border-color: -moz-use-text-color -moz-use-text-color #F24141;
 }

@@ -121,6 +121,7 @@ Template.addArea.events({
 Template.addArea.rendered = function(){
 	Session.set('atype','');
 	Meteor.subscribe('areas');
+		
 }
 
 

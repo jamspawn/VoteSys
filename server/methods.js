@@ -65,55 +65,87 @@ Meteor.methods({
       throw new Meteor.Error(403, "Access denied")
     }
     else{
-    	var id = Accounts.createUser({
-		  	username : user.cc,
-		    email: user.email,
-		    password: user.keyp,
-		    profile: { 
-		    	updated: false,
-		    	keyp : user.keyp,
-  				tipo :user.tip,
-  				cc :user.cc,
-  				email :user.email,
-  				zona :user.zone,
-  				comu :user.comu,
-  				cuad :user.squa
-		    }
-		});
+      if(!user.isMultiplicator){
+        var id = Accounts.createUser({
+          username : user.cc,
+          //email: user.email,
+          password: user.keyp,
+          profile: { 
+            updated: false,
+            keyp : user.keyp,
+            tipo :user.tip,
+            cc :user.cc,
+            email :user.email,
+            zona :user.zone,
+            comu :user.comu,
+            cuad :user.squa
+          }
+        }); 
+      }
+      else{
+        var origin = Prospectos.find({cedula:user.cc}).fetch()[0];
+        var id = Accounts.createUser({
+          username : user.cc,
+          //email: user.email,
+          password: user.keyp,
+          profile: { 
+            updated: false,
+            keyp : user.keyp,
+            tipo :'Multiplicador',
+            cc :user.cc,
+            email :origin.email,
+            zona :origin.zona,
+            comu :origin.comuna,
+            cuad :origin.cuadrante,
+            nombres:origin.nombres,
+            apellidos :origin.apellidos,
+            direccion :origin.direccion,
+            telefono :origin.telefono,
+            celular :origin.celular,
+            creadoPor :origin.creadoPor
+          }
+        });
 
-		Email.send({
-			from: "JuanPabloGalloStaff@JPG.com",
-			to: user.email,
-			subject: "Acceso plataforma",
-			text: "Por favor ingresa a votesys.meteor.com con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
-		});
+        Prospectos.update({cedula:user.cc},{$set : {esMulti:true}});
+
+        user.email = origin.email;
+      }
+      Email.send({
+        from: "JuanPabloGalloStaff@JPG.com",
+        to: user.email,
+        subject: "Acceso plataforma",
+        text: "Por favor ingresa a votesys.meteor.com con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
+      });	
     }
   },
 
   updateUser: function(data){
-  	var uId = Meteor.userId()
-	   var userData = Meteor.users.find({_id:uId}).fetch();
+    var uId = Meteor.userId()
+    var userData = Meteor.users.find({_id:uId}).fetch();
   	var tempProfile = userData[0].profile;
-  	var newProfile = {
-  		nombres: data.name,
-  		apellidos: data.lname,
-  		direccion: data.addr,
-  		telefono: data.phon,
-  		celular: data.mobi
-  	}
 
   	Meteor.users.update({_id:Meteor.userId()},{ $unset : {'profile.keyp':''}});
-  	Meteor.users.update({_id:Meteor.userId()},{
-  		$set : {
-  			username:data.user,
-	  		'profile.nombres':data.name,
-	  		'profile.apellidos':data.lname,
-	  		'profile.direccion':data.addr,
-	  		'profile.telefono':data.phon,
-	  		'profile.celular':data.mobi,
-	  		'profile.updated':true
-  		}
-  	});
+    if(!data.isMultiplicator){
+    	Meteor.users.update({_id:Meteor.userId()},{
+    		$set : {
+    			username:data.user,
+  	  		'profile.nombres':data.name,
+  	  		'profile.apellidos':data.lname,
+  	  		'profile.direccion':data.addr,
+  	  		'profile.telefono':data.phon,
+  	  		'profile.celular':data.mobi,
+  	  		'profile.updated':true
+    		}
+    	});
+    }
+    else{
+      Meteor.users.update({_id:Meteor.userId()},{
+        $set : {
+          username:data.user,
+          'profile.updated':true
+        }
+      });
+    }
   	Accounts.setPassword(Meteor.userId(), data.pass);
 
   	if(tempProfile.tipo == 'Lider Zona'){
