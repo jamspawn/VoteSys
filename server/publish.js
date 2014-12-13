@@ -17,6 +17,6 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish('colaboradoresDatos',function(){
-		return Meteor.users.find({},{fields:{profile:1}});
+		return Meteor.users.find({'profile.cc':{$exists:true}},{fields:{profile:1}});
 	})
 }
