@@ -10,6 +10,10 @@ Template.adminNav.events({
 			//alert('agregaras un colaborador');
 			Router.go('addColaborator');
 		}
+		else if(elemento == 'mmult'){
+			//alert('agregaras un colaborador');
+			Router.go('addMultiplicator');
+		}
 		else{
 			//alert('agregaras un prospecto');
 			Router.go('addProspect');
@@ -26,6 +30,10 @@ Template.adminNav.events({
 		else if(list == 'mcolab'){
 			//alert('agregaras un colaborador');
 			Router.go('listColaborators');
+		}
+		else if(list == 'mmult'){
+			//alert('agregaras un colaborador');
+			Router.go('listMultiplicators');
 		}
 		else{
 			//alert('veamos prospectos');

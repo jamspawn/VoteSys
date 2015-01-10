@@ -1,4 +1,4 @@
-Template.addProspect.rendered = function(){
+Template.addMultiplicator.rendered = function(){
 	
 	posc = {
 		lat:'desconocido',
@@ -11,11 +11,12 @@ Template.addProspect.rendered = function(){
 
 }
 
-Template.addProspect.events({
+Template.addMultiplicator.events({
 	'submit #addNewProspect' : function(e){
 		e.preventDefault();
 
 		var data = {
+			mult : true,
 			cate : $('#ptip').val(),
 			name : $('#pname').val(),
 			lname: $('#plname').val(),

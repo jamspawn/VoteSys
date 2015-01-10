@@ -80,10 +80,16 @@ Meteor.methods({
             comu :user.comu,
             cuad :user.squa
           }
+        });
+        Email.send({
+          from: "JuanPabloGalloStaff@JPG.com",
+          to: user.email,
+          subject: "Acceso plataforma",
+          text: "Por favor ingresa a votesys.meteor.com con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
         }); 
       }
       else{
-        var origin = Prospectos.find({cedula:user.cc}).fetch()[0];
+        /*var origin = Prospectos.find({cedula:user.cc}).fetch()[0];
         var id = Accounts.createUser({
           username : user.cc,
           //email: user.email,
@@ -104,18 +110,20 @@ Meteor.methods({
             celular :origin.celular,
             creadoPor :origin.creadoPor
           }
-        });
+        });*/
 
         Prospectos.update({cedula:user.cc},{$set : {esMulti:true}});
 
-        user.email = origin.email;
+        //user.email = origin.email;
       }
+      /*
       Email.send({
         from: "JuanPabloGalloStaff@JPG.com",
         to: user.email,
         subject: "Acceso plataforma",
         text: "Por favor ingresa a votesys.meteor.com con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
-      });	
+      }); 
+      */
     }
   },
 
@@ -185,6 +193,10 @@ Meteor.methods({
     data.cuad = user[0].profile.cuad;
     data.addedby = user[0].profile.cc;
 
+    if(!data.mult){
+      data.mult = false;
+    }
+
     var exist = Prospectos.find({cedula:data.cc}).count();
     if(exist>0){
       throw new Meteor.Error(500, "Registrado con esta cedula");
@@ -196,6 +208,7 @@ Meteor.methods({
         apellidos: data.lname,
         cedula: data.cc,
         email: data.mail,
+        esMulti: data.mult,
         direccion: data.addr,
         telefono: data.phon,
         celular: data.mobil,

@@ -27,12 +27,20 @@ Router.map(function(){
 		name : 'addProspect'
 	});
 
+	this.route('/panel/newMultiplicator',{
+		name : 'addMultiplicator'
+	});
+
 	this.route('/panel/Welcome',{
 		name : 'firstTimeAcces'
 	});
 
 	this.route('/panel/listprospects',{
 		name : 'listProspects'
+	});
+
+	this.route('/panel/listmultiplicators',{
+		name : 'listMultiplicators'
 	});
 
 	this.route('/panel/listareass',{

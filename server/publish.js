@@ -16,6 +16,10 @@ if (Meteor.isServer) {
 	  return Prospectos.find();
 	});
 
+	/*Meteor.publish('multiplicadores', function(){
+	  return Prospectos.find({'multiplicador':'1'});
+	});*/
+
 	Meteor.publish('colaboradoresDatos',function(){
 		return Meteor.users.find({'profile.cc':{$exists:true}},{fields:{profile:1}});
 	})

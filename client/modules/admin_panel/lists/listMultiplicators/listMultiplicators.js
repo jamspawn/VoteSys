@@ -1,12 +1,12 @@
-Template.listProspects.helpers({
+Template.listMultiplicators.helpers({
 	'prospectos' : function(){
-		var p = Prospectos.find();
+		var p = Prospectos.find({esMulti:true});
 		return p;
 	}
 })
 
 
-Template.listProspects.events({
+Template.listMultiplicators.events({
 	'click .btn-success' : function(e){
 		var TEMP_accesCode = makepass();
 		data = {
@@ -37,7 +37,7 @@ Template.listProspects.events({
 
 })
 
-Template.listProspects.rendered = function(){
+Template.listMultiplicators.rendered = function(){
 	Meteor.subscribe('prospectos');
 }
 
