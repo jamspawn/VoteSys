@@ -1,0 +1,28 @@
+<template name="rawreferlist">
+	<div class="listcontainer">
+		<ul class="multiul">
+			<li class="multili">
+				<h4><a href=""><i>No asignado</i></a></h4>
+				<ul class="referul">
+					{{#each refers 'na'}}
+						<li class="referli">
+							{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
+						</li>
+					{{/each}}
+				</ul>
+			</li>
+			{{#each multipliers}}
+				<li class="multili">
+					<h4><a href=""><i>{{this.cedula}} - {{this.nombres}} {{this.apellidos}}</i></a></h4>
+					<ul class="referul">
+						{{#each refers cedula}}
+							<li class="referli">
+								{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
+							</li>
+						{{/each}}
+					</ul>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+</template>

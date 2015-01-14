@@ -220,7 +220,8 @@ Meteor.methods({
         creadoPor: data.addedby,
         longitud: data.longi,
         latitud: data.latit,
-        notas: data.notas
+        notas: data.notas,
+        asoMulti: false
 
       });
 
