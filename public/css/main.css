@@ -1,5 +1,5 @@
 body{
-	background : #555;
+	background : #F9F9F9;
 }
 
 header{
@@ -127,4 +127,8 @@ footer p{
 	border-width: 0px 0px 2px;
 	border-style: none none solid;
 	border-color: -moz-use-text-color -moz-use-text-color #F24141;
+}
+
+.referul{
+	display:none;
 }

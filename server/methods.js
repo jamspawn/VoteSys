@@ -228,5 +228,15 @@ Meteor.methods({
       return 'Creado con exito'
     }
 
+  },
+
+  asoMult: function(user){
+    var loggedInUser = Meteor.user()
+    if (!loggedInUser) {
+      throw new Meteor.Error(403, "Access denied")
+    }
+    else{
+      Prospectos.update({cedula:user.cc},{$set : {asoMulti:user.asm}});
+    }
   }
 })
