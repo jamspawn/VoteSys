@@ -1,6 +1,9 @@
 <template name="layout">
 	{{>header}}
 	<div id="wrapper">
+		{{#if currentUser}}
+			{{>infolog}}
+		{{/if}}
 		{{>yield}}
 	</div>
 	{{>footer}}

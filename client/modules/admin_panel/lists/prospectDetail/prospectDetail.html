@@ -1,0 +1,55 @@
+<template name="prospectDetail">
+	{{#if currentUser}}
+		<div class="panel panel-default ">
+			<!-- Default panel contents -->
+			<div class="panel-heading"><b>{{nombres}} {{apellidos}} - {{cedula}}</b></div>
+			<div class="table-responsive">
+				<!-- Table -->
+			  <table class="table table-striped table-hover">
+			  	<thead>
+			        <tr>
+			            <th data-field="name" data-align="right"></th><th data-field="value" data-align="left"></th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			    	<tr>
+			            <td data-field="name" data-align="left"><b>Categoria</b></td><td data-field="value" data-align="right">{{categoria}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Correo</b></td><td data-field="value" data-align="right">{{email}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Direccion</b></td><td data-field="value" data-align="right">{{direccion}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Telefono fijo</b></td><td data-field="value" data-align="right">{{telefono}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left">T<b>elefono movil</b></td><td data-field="value" data-align="right">{{celular}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Ocupacion</b></td><td data-field="value" data-align="right">{{ocupacion}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Telefono movil</b></td><td data-field="value" data-align="right">{{celular}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Cuadrante</b></td><td data-field="value" data-align="right">{{cuadrante}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Creado por</b></td><td data-field="value" data-align="right">{{creadoPor}}</td>      
+			        </tr>
+			        <tr>
+			            <td data-field="name" data-align="left"><b>Notas</b></td><td data-field="value" data-align="right">{{notas}}</td>      
+			        </tr>
+			    </tbody>
+			  </table>
+			</div>
+			  
+		</div>
+		<div id="mapcontainer">
+			<img src="https://maps.googleapis.com/maps/api/staticmap?center={{longitud}},{{latitud}}&zoom=17&size=400x400&markers=color:blue%7Clabel:S%7C{{longitud}},{{latitud}}" />
+		</div>
+		{{>returnButton}}
+	{{/if}}
+</template>

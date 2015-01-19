@@ -1,6 +1,6 @@
 <template name="addColaborator">
 	{{#if currentUser}}
-
+		{{#unless isInRole 'Lider Cuadrante'}}
 			<div class="formcontainer">
 				<form id="add-col" class="form-horizontal">
 					<fieldset>
@@ -71,5 +71,7 @@
 
 			</div>
 			{{>returnButton}}
+
+		{{/unless}}
 	{{/if}}
 </template>

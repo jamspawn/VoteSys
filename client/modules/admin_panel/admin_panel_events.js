@@ -18,7 +18,7 @@ Template.adminPanel.rendered = function(){
 	}
 
 	var username = Meteor.user().username;
-	console.log(username+' -> '+userid);
+	//console.log(username+' -> '+userid);
 	/*if (username == 'Techsupp'){
 		var roles = ['admin', 'techsup'];
 		Meteor.call('updateRoles',[userid,roles], function(error, result){console.log(error, result)});

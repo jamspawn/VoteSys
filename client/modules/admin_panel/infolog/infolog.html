@@ -1,0 +1,20 @@
+<template name="infolog">
+	<div class="alert alert-info">
+        <!--<a href="#" class="close" data-dismiss="alert">&times;</a>-->
+		<p>Logueado como :</p>
+		{{#each screendata}}
+			<p><b>{{this.profile.tipo}}</b> {{this.profile.nombres}} {{this.profile.apellidos}} - {{this.profile.cc}}</p>
+			{{#if this.profile.cuad}}
+				<p>Cuadrante {{this.profile.cuad}}</p>
+			{{else}}
+				{{#if this.profile.comu}}
+					<p>Comuna {{this.profile.comu}}</p>
+				{{else}}
+					{{#if this.profile.zona}}
+						<p>Zona {{this.profile.zona}}</p>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		{{/each}}
+	</div>
+</template>

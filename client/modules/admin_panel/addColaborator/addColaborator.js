@@ -64,7 +64,7 @@ Template.addColaborator.events({
 	    		}
 	    		if(ce == 0){
 	    			Meteor.call('addColaborator',colab,function(error, result){
-	    				error,result;
+	    				alert(error+' '+result);
 	    			});
 
 	    			Colaboradores.insert({

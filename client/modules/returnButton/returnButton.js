@@ -1,5 +1,6 @@
 Template.returnButton.events({
 	'click #returnbutton' : function(e){	
-		Router.go('/Panel');	
+		//Router.go('/Panel');	
+		window.history.back()
 	}
 })

@@ -55,5 +55,8 @@ Template.rawreferlist.events({
 		var id = $(e.currentTarget).attr('id');
 		var sulid = id.replace('multili','referul');
 		$('#'+sulid).toggle(400);
+	},
+	'click .referul' : function(e){
+		e.stopPropagation();
 	}
 })

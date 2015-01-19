@@ -101,6 +101,10 @@ Template.listProspects.events({
 
 	'click #prosasoclear' : function(e){
 		data = '';
+	},
+
+	'click .prdetail' : function(e){
+		Router.go('prospectDetail', {cc:$(e.currentTarget).attr('cc')});
 	}
 
 })

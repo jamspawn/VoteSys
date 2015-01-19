@@ -1,0 +1,4 @@
+Template.prospectDetail.rendered = function(){
+	
+
+}
