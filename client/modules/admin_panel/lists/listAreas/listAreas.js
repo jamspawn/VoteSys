@@ -25,6 +25,24 @@ Template.listAreas.helpers({
 Template.listAreas.events({
 	'click .areadetail' : function(e){
 		Router.go('areaDetail', {cc:$(e.currentTarget).attr('cc')});
+	},
+	'click .prfilter' : function(e){
+		var code = $(e.currentTarget).attr('cc');
+		var t = $(e.currentTarget).attr('tipo');
+		if(t == "Zona"){
+			var tipo='zona';
+		}
+		else if(t == "Comuna"){
+			var tipo='comu';
+		}
+		else if(t == "Cuadrante"){
+			var tipo='cuad';
+		}
+		//filterstring = 'area'+tipo+code;
+		/*alert(filterstring.substring(0,4));
+		alert(filterstring.substring(4,8));
+		alert(filterstring.substring(8));*/
+		Router.go('filterProspectsList', {filtername:tipo,filtervalue:code});
 	}
 })
 
