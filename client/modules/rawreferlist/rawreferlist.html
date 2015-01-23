@@ -1,28 +1,62 @@
 <template name="rawreferlist">
 	<div class="listcontainer">
-		<ul class="multiul">
-			<li id='multili0' class="multili">
-				<h5><a href=""><i>No asignado</i></a></h5>
-				<ul id='referul0' class="referul">
-					{{#each refers 'na'}}
-						<li class="referli">
-							{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
-						</li>
-					{{/each}}
-				</ul>
-			</li>
-			{{#each multipliers}}
-				<li id='multili{{this.cedula}}' class="multili">
-					<h5><a href=""><i>{{this.cedula}} - {{this.nombres}} {{this.apellidos}}</i></a></h5>
-					<ul id='referul{{this.cedula}}' class="referul">
-						{{#each refers cedula}}
-							<li class="referli">
-								{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
-							</li>
-						{{/each}}
-					</ul>
-				</li>
-			{{/each}}
-		</ul>
+			<ul class="zoneul">
+				{{#each zone}}
+					<li id="zoneli{{this.codigo}}" class="zoneli">
+						<h5><a href=""><i>{{this.codigo}} - {{this.descripcion}}</i></a></h5>
+
+						<ul class="comuneul">
+
+								{{#each comune codigo}}
+
+
+									<li id="comuneli{{this.codigo}}" class="comuneli">
+										<h5><a href=""><i>{{this.codigo}} - {{this.descripcion}}</i></a></h5>
+										<ul class="cuadul">
+											{{#each quadrant codigo}}
+												<li id="cuadli{{this.codigo}}" class="cuadli">
+													<h5><a href=""><i>{{this.codigo}} - {{this.descripcion}}</i></a></h5>
+													<ul class="cuadlul">
+														{{#each cuadleaders codigo}}
+															<li id="cuadlli{{this.profile.cc}}" class="cuadlli">
+																<h5><a href=""><i>{{this.profile.cc}} - {{this.profile.nombres}} {{this.profile.apellidos}}</i></a></h5>
+																<ul class="multiul">
+																	<li id='multili0' class="multili">
+																		<h5><a href=""><i>No asignado</i></a></h5>
+																		<ul id='referul0' class="referul">
+																			{{#each refers 'na'}}
+																				<li class="referli">
+																					{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
+																				</li>
+																			{{/each}}
+																		</ul>
+																	</li>
+																	{{#each multipliers profile.cc}}
+																		<li id='multili{{this.cedula}}' class="multili">
+																			<h5><a href=""><i>{{this.cedula}} - {{this.nombres}} {{this.apellidos}}</i></a></h5>
+																			<ul id='referul{{this.cedula}}' class="referul">
+																				{{#each refers cedula}}
+																					<li class="referli">
+																						{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
+																					</li>
+																				{{/each}}
+																			</ul>
+																		</li>
+																	{{/each}}
+																</ul>
+															</li>
+														{{/each}}
+													</ul>
+												</li>
+											{{/each}}
+										</ul>
+									</li>
+
+								{{/each}}
+								
+						</ul>
+					</li>
+				{{/each}}
+			</ul>
 	</div>
 </template>
