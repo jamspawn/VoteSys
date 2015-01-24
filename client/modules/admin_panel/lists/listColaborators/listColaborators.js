@@ -1,3 +1,4 @@
+
 Template.listColaborators.helpers({
 	'colaborators' : function(){
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();

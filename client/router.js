@@ -70,18 +70,18 @@ Router.map(function(){
 	this.route('/panel/listareas/detail:cc',{
 		name: 'areaDetail',
 		data: function(){
-			//var s = Meteor.subscribe('areas');
-			//var ss = Meteor.subscribe('colaboradoresDatos');
-			var ap = Areas.findOne({'codigo':this.params.cc});
-			var cargo = "Lider "+ap.tipo;
+			var s = Meteor.subscribe('areas');
+			var ss = Meteor.subscribe('colaboradoresDatos');
+			ap = Areas.findOne({'codigo':this.params.cc});
+			//cargo = "Lider "+ap.tipo;
 			if(ap.tipo == 'Zona'){
-				var cp = Meteor.users.findOne({"profile.tipo":'Lider Zona', "profile.zona":ap.codigo});
+				cp = Meteor.users.findOne({"profile.tipo":'Lider Zona', "profile.zona":ap.codigo});
 			}
 			else if(ap.tipo == 'Comuna'){
-				var cp = Meteor.users.findOne({"profile.tipo":'Lider Comuna', 'profile.comu':ap.codigo});
+				cp = Meteor.users.findOne({"profile.tipo":'Lider Comuna', 'profile.comu':ap.codigo});
 			}
 			else if(ap.tipo == 'Cuadrante'){
-				var cp = Meteor.users.findOne({"profile.tipo":'Lider Cuadrante', 'profile.cuad':ap.codigo});
+				cp = Meteor.users.findOne({"profile.tipo":'Lider Cuadrante', 'profile.cuad':ap.codigo});
 			}
 
 			var info ={

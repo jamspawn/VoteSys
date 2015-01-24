@@ -133,8 +133,45 @@ footer p{
 	display:none;
 }
 
+.cuadlul{
+	display:none;
+}
+
+.cuadul{
+	display: none;
+}
+
+.comuneul{
+	display: none;
+}
+
 #mapcontainer {
 	max-width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.listcontainer li{
+	border-top:1px solid gray;
+	text-decoration: none;
+	list-style-type: none;
+	border-left-width: 0;
+}
+
+.listcontainer a{
+	text-decoration: none;
+}
+
+.listcontainer .btn{
+	padding:2px;
+}
+
+.listcontainer h5{
+	display: inline-block;
+}
+
+.listcontainer .optset{
+	display: inline-block;
+	float: right;
+	margin: 3px;
 }
