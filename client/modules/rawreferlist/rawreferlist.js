@@ -1,23 +1,12 @@
 Template.rawreferlist.helpers({
 
-	'multipliers' : function(){
+	'multipliah' : function(){
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
 		var tipo = iusr[0].profile.tipo;
 		var zone = iusr[0].profile.zona;
 		var comu = iusr[0].profile.comu;
 		var cuad = iusr[0].profile.cuad;
-		if(tipo == "Lider Cuadrante"){
-			var p = Prospectos.find({esMulti:true, cuadrante:cuad});
-		}
-		else if(tipo == "Lider Comuna"){
-			var p = Prospectos.find({esMulti:true, comuna:comu});
-		}
-		else if(tipo == "Lider Zona"){
-			var p = Prospectos.find({esMulti:true, zona:zone});
-		}
-		else if(tipo == "techsup" || tipo == "admin"){
-			var p = Prospectos.find({esMulti:true});
-		}
+		var p = Prospectos.find({esMulti:true, creadoPor:Session.get('cuadlead')});
 		
 		return p;
 	}, 
@@ -118,7 +107,7 @@ Template.rawreferlist.helpers({
 		var cuad = iusr[0].profile.cuad;
 		var cp = iusr[0].profile.cc;
 		if(tipo == "Lider Cuadrante"){
-			var p = Prospectos.find({esMulti:true, creadoPor:cp});
+			var p = Prospectos.find({esMulti:true, creadoPor:cl});
 		}
 		else if(tipo == "Lider Comuna"){
 			var p = Prospectos.find({esMulti:true, creadoPor:cl});
@@ -134,26 +123,22 @@ Template.rawreferlist.helpers({
 	},
 
 	'refers' : function(mult){
-		if (mult == 'na'){
-			mult = false;
-		}
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
 		var tipo = iusr[0].profile.tipo;
 		var zone = iusr[0].profile.zona;
 		var comu = iusr[0].profile.comu;
 		var cuad = iusr[0].profile.cuad;
-		if(tipo == "Lider Cuadrante"){
-			var p = Prospectos.find({esMulti:false, asoMulti:mult, cuadrante:cuad});
-		}
-		else if(tipo == "Lider Comuna"){
-			var p = Prospectos.find({esMulti:false, asoMulti:mult, comuna:comu});
-		}
-		else if(tipo == "Lider Zona"){
-			var p = Prospectos.find({esMulti:false, asoMulti:mult, zona:zone});
-		}
-		else if(tipo == "techsup" || tipo == "admin"){
-			var p = Prospectos.find({esMulti:false, asoMulti:mult});
-		}
+		var p = Prospectos.find({esMulti:false, asoMulti:mult});
+		return p;
+	},
+
+	'narefers' : function(cp){
+		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+		var tipo = iusr[0].profile.tipo;
+		var zone = iusr[0].profile.zona;
+		var comu = iusr[0].profile.comu;
+		var cuad = iusr[0].profile.cuad;
+		var p = Prospectos.find({esMulti:false, asoMulti:false, creadoPor:cp});
 		return p;
 	}
 })
@@ -262,9 +247,16 @@ Template.rawreferlist.events({
 		},
 
 		/*mult and prosp special options*/
-
-			'click .btn-success' : function(e){
+			'click #addrefer' : function(e){
 				e.stopPropagation();
+				var c = $(e.currentTarget).attr('cc');
+				window.open(Router.url('addProspect',{multi:c}));
+			},
+
+			'click #tomulti' : function(e){
+				//e.stopPropagation();
+				//alert('make-me')
+				$('#prosptomult').modal('show');
 				var TEMP_accesCode = makepass();
 				data = {
 					cc : $(e.currentTarget).attr('cc'),
@@ -299,6 +291,40 @@ Template.rawreferlist.events({
 				window.open(Router.url('prospectDetail', {cc:$(e.currentTarget).attr('cc')}));
 
 			},
+
+			'click #prosaso' : function(e){
+				//alert('here')
+				
+				data.asm = $('#asimult').val();
+				if(!data.asm){
+					alert('seleccione un multiplicador de la lista')
+				}
+				else{
+					Meteor.call('asoMult', data, function(error,result){
+						error,result
+					})
+					//alert(JSON.stringify(data));
+					alert('proceso completado');
+					$('#prosasoclear').click();
+				}
+			},
+
+			'click #prosasoclear' : function(e){
+				data = '';
+			},
+
+			'click .asignmulbutn' : function(e){
+				var cuadlead = $(e.currentTarget).parents('.cuadlli').attr('cc');
+				//alert(cuadlead);
+				Session.set('cuadlead',cuadlead);
+				$('#prosasomult').modal('show');
+				data = {
+					cc : $(e.currentTarget).attr('cc'),
+					//afk : $(e.currentTarget).attr('asm'),
+					asm : false
+				}
+				//alert(JSON.stringify(data));		
+			}
 		/*mult and prosp special options*/
 
 	/*options buttons*/

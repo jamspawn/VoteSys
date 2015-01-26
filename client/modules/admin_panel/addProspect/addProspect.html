@@ -1,13 +1,13 @@
 <template name="addProspect">
 	{{#if currentUser}}
-
+		{{#unless isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
 			<div class="formcontainer">
 				<form id="addNewProspect" class="form-horizontal">
 					<fieldset>
 
 					<!-- Form Name -->
 						<legend class="form-title">Añadir Referido</legend>
-
+						<input type="hidden" id="pamult" value="{{cedula}}">
 						<!-- Select Basic -->
 						<div class="form-group">
 						  <label class="col-md-4 control-label" for="ptip">Categoria</label>
@@ -135,6 +135,12 @@
 					</fieldset>
 				</form>
 			</div>
-			{{>returnButton}}
+		{{/unless}}
+		{{#if isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
+			<div class="alert alert-info">
+				Solo los lideres de cuadrante pueden agregar referidos al sistema
+			</div>
+		{{/if}}
+		{{>returnButton}}
 	{{/if}}
 </template>

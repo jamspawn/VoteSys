@@ -14,7 +14,12 @@ Template.addProspect.rendered = function(){
 Template.addProspect.events({
 	'submit #addNewProspect' : function(e){
 		e.preventDefault();
-
+		if($('#pamult').val()){
+			var pamul = $('#pamult').val();
+		}
+		else{
+			var pamul = false;
+		}
 		var data = {
 			cate : $('#ptip').val(),
 			name : $('#pname').val(),
@@ -28,7 +33,8 @@ Template.addProspect.events({
 			matr : $('#pmat').val(),
 			notas: $('#pnotif').val(),
 			longi: posc.lat,
-			latit: posc.lon
+			latit: posc.lon,
+			aso	 : pamul
 		}
 		
 		var loggedInUser = Meteor.user();

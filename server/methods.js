@@ -16,10 +16,10 @@ Meteor.methods({
     Roles.addUsersToRoles(targetUserId, roles);*/
 
     var users = [
-		    {name:"Techsup",email:"alejandro@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
-		    {name:"Techsup2",email:"giovanni@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
-		    {name:"Ghost",email:"ghost@votesys.com" ,pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
-		    {name:"TesUser",email:"test@votesys.com" ,pass:"12345" , roles:['Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'prueba'}
+		    {name:"Techsup",email:"alejandro@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte', tipo:'techsup'},
+		    {name:"Techsup2",email:"giovanni@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte', tipo:'techsup'},
+		    {name:"Ghost",email:"ghost@votesys.com" ,pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte', tipo:'admin'},
+		    {name:"TesUser",email:"test@votesys.com" ,pass:"12345" , roles:['Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'prueba', tipo:'techsup'}
 		];
 		
 		_.each(users, function (user) {
@@ -31,7 +31,8 @@ Meteor.methods({
 		    password: user.pass,
 		    profile: { 
 		    	name: user.name,
-		    	updated: false
+		    	updated: false,
+          tipo: user.tipo
 		    }
 		  });
 
@@ -183,6 +184,13 @@ Meteor.methods({
   fixingTechsupp:function(userId){
   	var roles = ['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador','Test'];
   	Roles.setUserRoles(userId, roles);
+    Meteor.users.update({_id:userId},{
+      $set : {
+        'profile.tipo':'admin',
+        'profile.apellidos':'Admin',
+        'profile.nombres':'Ghost'
+      }
+    });
   },
 
   addProspects: function(data){
@@ -195,6 +203,10 @@ Meteor.methods({
 
     if(!data.mult){
       data.mult = false;
+    }
+
+    if(!data.aso){
+      data.aso = false;
     }
 
     var exist = Prospectos.find({cedula:data.cc}).count();
@@ -221,7 +233,7 @@ Meteor.methods({
         longitud: data.longi,
         latitud: data.latit,
         notas: data.notas,
-        asoMulti: false
+        asoMulti: data.aso
 
       });
 

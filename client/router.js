@@ -23,8 +23,12 @@ Router.map(function(){
 		name : 'addColaborator'
 	});
 
-	this.route('/panel/newProspect',{
-		name : 'addProspect'
+	this.route('/panel/newProspect/:multi',{
+		name : 'addProspect',
+		data: function(){
+			//var s = Meteor.subscribe('');
+			return Prospectos.findOne({'cedula':this.params.multi});
+		}
 	});
 
 	this.route('/panel/newMultiplicator',{

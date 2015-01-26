@@ -4,21 +4,26 @@
 			{{#if isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
 				<li id="mareas" role="presentation">
 					<a href="#">Areas</a>
-					<button type="button" value="marea" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+					<button type="button" value="marea" class="btn btn-info listbutton"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button>
+					<button type="button" value="marea" class="btn btn-success addbutton"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 				</li>
 				<li id="mcolab" role="presentation">
 					<a href="#">Colaboradores</a>
-					<button type="button" value="mcolab" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+					<button type="button" value="mcolab" class="btn btn-info listbutton"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button>
+					<button type="button" value="mcolab" class="btn btn-success addbutton"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 				</li>
 			{{/if}}
-			<li id="mmult" role="presentation">
-				<a href="#">Multiplicadores</a>
-				<button type="button" value="mmult" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-			</li>
-			<li id="mprosp" role="presentation">
-				<a href="#">Referidos</a>
-				<button type="button" value="mprosp" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-			</li>
+			{{#unless isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
+				<li id="mmult" role="presentation">
+					<a href="#">Multiplicadores</a>
+					<button type="button" value="mmult" class="btn btn-success addbutton"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+				</li>
+			
+				<li id="mprosp" role="presentation">
+					<a href="#">Referidos</a>
+					<button type="button" value="mprosp" class="btn btn-success addbutton"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+				</li>
+			{{/unless}}
 	    </ul>
 	</div>
 </template>
