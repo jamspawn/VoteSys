@@ -54,37 +54,9 @@ Template.addArea.events({
 	    			var ae = Areas.find({tipo:area.tip, codigo:area.zon+''+area.com+''+area.cod}).count();
 	    		}
 	    		if(ae == 0){
-	    			if(area.tip == 'Zona'){
-	    				area.zon ='';
-	    				area.com='';
-	    				Areas.insert({
-							tipo: area.tip,
-							descripcion: area.desc,
-							codigo: area.cod
-						});
-						
-	    			}
-	    			else if(area.tip == 'Comuna'){
-	    				area.com='';
-	    				Areas.insert({
-							tipo: area.tip,
-							descripcion: area.desc,
-							codigo: area.zon+''+area.cod,
-							zona: area.zon
-						});
-						
-	    			}
-	    			else{
-	    				Areas.insert({
-							tipo: area.tip,
-							descripcion: area.desc,
-							codigo: area.com+''+area.cod,
-							zona: area.zon,
-							comuna: area.com
-						});
-						area.zon ='';
-						
-	    			}
+	    			Meteor.call('addArea',area,function(error, result){
+	    				alert(error+' '+result);
+	    			});
 	    			alert(area.tip+' creada con el codigo '+area.zon+''+area.com+''+area.cod);
 						
 				}

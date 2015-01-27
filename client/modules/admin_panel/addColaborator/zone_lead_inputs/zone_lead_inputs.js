@@ -4,3 +4,7 @@ Template.zone_lead_inputs.helpers({
 		return areas;
 	}
 })
+
+Template.zone_lead_inputs.rendered = function(){
+	Meteor.subscribe('areas');
+}

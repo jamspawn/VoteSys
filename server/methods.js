@@ -16,10 +16,10 @@ Meteor.methods({
     Roles.addUsersToRoles(targetUserId, roles);*/
 
     var users = [
-		    {name:"Techsup",email:"alejandro@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
-		    {name:"Techsup2",email:"giovanni@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
-		    {name:"Ghost",email:"ghost@votesys.com" ,pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte'},
-		    {name:"TesUser",email:"test@votesys.com" ,pass:"12345" , roles:['Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'prueba'}
+		    {name:"Techsup",email:"alejandro@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna'], group:'soporte'},
+		    {name:"Techsup2",email:"giovanni@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna'], group:'soporte'},
+		    {name:"Ghost",email:"ghost@votesys.com" ,pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna'], group:'soporte'},
+		    {name:"TesUser",email:"test@votesys.com" ,pass:"12345" , roles:['Lider Zona','Lider Comuna'], group:'prueba'}
 		];
 		
 		_.each(users, function (user) {
@@ -31,7 +31,8 @@ Meteor.methods({
 		    password: user.pass,
 		    profile: { 
 		    	name: user.name,
-		    	updated: false
+		    	updated: false,
+          tipo: 'techsup'
 		    }
 		  });
 
@@ -56,6 +57,47 @@ Meteor.methods({
 	    // after `Accounts.createUser` or `Accounts.onCreate`
 	    Roles.addUsersToRoles(id, user.roles);
 	  }
+  },
+
+  addArea: function(area){
+    var loggedInUser = Meteor.user()
+
+    if (!loggedInUser) {
+      throw new Meteor.Error(403, "Access denied")
+    }
+    else{
+      if(area.tip == 'Zona'){
+        area.zon ='';
+        area.com='';
+        Areas.insert({
+        tipo: area.tip,
+        descripcion: area.desc,
+        codigo: area.cod
+      });
+      
+      }
+      else if(area.tip == 'Comuna'){
+        area.com='';
+        Areas.insert({
+        tipo: area.tip,
+        descripcion: area.desc,
+        codigo: area.zon+''+area.cod,
+        zona: area.zon
+      });
+      
+      }
+      else{
+        Areas.insert({
+        tipo: area.tip,
+        descripcion: area.desc,
+        codigo: area.com+''+area.cod,
+        zona: area.zon,
+        comuna: area.com
+      });
+      area.zon ='';
+      
+      }
+    }
   },
 
   addColaborator: function(user){
