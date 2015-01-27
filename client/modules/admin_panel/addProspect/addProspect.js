@@ -44,6 +44,19 @@ Template.addProspect.events({
 			});
 			console.log(JSON.stringify(add));
 			alert('Porspecto Ingresado');
+			/* clearing stuff */
+				cate : $('#ptip').val('');
+				name : $('#pname').val('');
+				lname: $('#plname').val('');
+				cc	 : $('#pcedula').val('');
+				mail : $('#pemail').val('');
+				addr : $('#paddres').val('');
+				phon : $('#pphone').val('');
+				mobil: $('#pmobile').val('');
+				prof : $('#pocu').val('');
+				matr : $('#pmat').val('');
+				notas: $('#pnotif').val('');			
+			/* clearing stuff */
 		}
 	}
 

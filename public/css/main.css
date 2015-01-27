@@ -1,5 +1,5 @@
 body{
-	background : #F9F9F9;
+	background : #BFBFBF;
 }
 
 header{
@@ -202,4 +202,20 @@ footer p{
 	display: inline-block;
 	float: right;
 	margin: 3px;
+}
+
+.listcontainer .cprospects{
+	background:#444;
+	border-color:#444;
+	color: #FFF;
+	display: inline-block;
+	margin-top: 3px;
+	margin-left: 10px;
+	margin-bottom: 0;
+	*width: 3em;
+	*height: .1em;
+	padding: .1em;
+	*padding-bottom: 0;
+	*vertical-align: middle;
+	text-align: right;
 }

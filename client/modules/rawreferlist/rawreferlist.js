@@ -9,7 +9,12 @@ Template.rawreferlist.helpers({
 		var p = Prospectos.find({esMulti:true, creadoPor:Session.get('cuadlead')});
 		
 		return p;
-	}, 
+	},
+
+	'prospectscount' : function(){
+		var c = Prospectos.find().count();
+		return c;
+	},
 
 	'zone' : function(){
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
@@ -31,6 +36,11 @@ Template.rawreferlist.helpers({
 		}
 		
 		return p;
+	},
+
+	'zonecount' : function(p){
+		var c = Prospectos.find({zona:p}).count();
+		return c;
 	},
 
 	'comune' : function(pzone){
@@ -55,6 +65,11 @@ Template.rawreferlist.helpers({
 		return p;
 	},
 
+	'comunecount' : function(p){		
+		var c = Prospectos.find({comuna:p}).count();
+		return c;
+	},
+
 	'quadrant' : function(comune){
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
 		var tipo = iusr[0].profile.tipo;
@@ -77,14 +92,20 @@ Template.rawreferlist.helpers({
 		return p;
 	},
 
+	'quadrantcount' : function(p){		
+		var c = Prospectos.find({cuadrante:p}).count();
+		return c;
+	},
+
 	'cuadleaders' : function(pcuad){
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
 		var tipo = iusr[0].profile.tipo;
 		var zone = iusr[0].profile.zona;
 		var comu = iusr[0].profile.comu;
 		var cuad = iusr[0].profile.cuad;
+		var cc = iusr[0].profile.cc;
 		if(tipo == "Lider Cuadrante"){
-			var p = Meteor.users.find({'profile.cuad':pcuad});
+			var p = Meteor.users.find({'profile.cuad':pcuad,'profile.cc':cc});
 		}
 		else if(tipo == "Lider Comuna"){
 			var p = Meteor.users.find({'profile.cuad':pcuad});
@@ -97,6 +118,11 @@ Template.rawreferlist.helpers({
 		}
 		
 		return p;
+	},
+
+	'cuadleaderscount' : function(p){		
+		var c = Prospectos.find({creadoPor:p}).count();
+		return c;
 	},
 
 	'multipliers' : function(cl){
@@ -120,6 +146,11 @@ Template.rawreferlist.helpers({
 		}
 		
 		return p;
+	},
+
+	'multiplierscount' : function(p){		
+		var c = Prospectos.find({asoMulti:p}).count();
+		return c;
 	},
 
 	'refers' : function(mult){

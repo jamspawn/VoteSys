@@ -15,8 +15,7 @@ Meteor.methods({
 
     Roles.addUsersToRoles(targetUserId, roles);*/
 
-    var users = [
-
+    /*var users = [
 		    {name:"Techsup",email:"alejandro@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte', tipo:'techsup'},
 		    {name:"Techsup2",email:"giovanni@votesys.com", pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte', tipo:'techsup'},
 		    {name:"Ghost",email:"ghost@votesys.com" ,pass:"12345" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'], group:'soporte', tipo:'admin'},
@@ -42,7 +41,7 @@ Meteor.methods({
 		    // after `Accounts.createUser` or `Accounts.onCreate`
 		    Roles.addUsersToRoles(id, user.roles);
 		  }
-		});
+		});*/
 
 
     //return 'done';
@@ -224,7 +223,7 @@ Meteor.methods({
   },
 
   fixingTechsupp:function(userId){
-  	var roles = ['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador','Test'];
+  	/*var roles = ['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador','Test'];
   	Roles.setUserRoles(userId, roles);
     Meteor.users.update({_id:userId},{
       $set : {
@@ -232,7 +231,31 @@ Meteor.methods({
         'profile.apellidos':'Admin',
         'profile.nombres':'Ghost'
       }
-    });
+    });*/
+  },
+
+  addAdmin:function(){
+    var users = [
+      {name:"gioadmin",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin',nombres:'Giovani',apellidos:'Henao',cc:'1', updated:true}},
+      {name:"admin.jpg",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin',nombres:'Juan Pablo',apellidos:'Gallo',cc:'2', updated:true}},
+    ];
+    
+    _.each(users, function (user) {
+      var id;
+
+      id = Accounts.createUser({
+        username : user.name,
+        //email: user.email,
+        password: user.pass,
+        profile: user.profile
+      });
+
+      if (user.roles.length > 0) {
+        // Need _id of existing user record so this call must come 
+        // after `Accounts.createUser` or `Accounts.onCreate`
+        Roles.addUsersToRoles(id, user.roles);
+      }
+    })
   },
 
   addProspects: function(data){

@@ -1,6 +1,11 @@
 <template name="rawreferlist">
 	<div class="listcontainer panel panel-default">
-		<div class="panel-heading"><b>Listado</b></div>
+		<div class="panel-heading">
+			<b>Listado</b>
+			{{#if isInRole 'admin,techsup'}}
+				<div class="alert alert-info cprospects"><p>{{prospectscount}} Referidos</p></div>
+			{{/if}}
+		</div>
 		<div class="table-responsive">
 			<table class="table table-striped table-hover">
 				<tbody>
@@ -8,6 +13,7 @@
 						{{#each zone}}
 							<li id="zoneli{{this.codigo}}" class="zoneli">
 								<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+								<div class="alert alert-info cprospects"><p>{{zonecount codigo}} Referidos</p></div>
 								{{#if isInRole 'admin,techsup'}}
 									<div class="optset">
 										<button title="detalles" cc="{{this.codigo}}" type="button" class="btn btn-info areadetail">
@@ -31,6 +37,7 @@
 
 											<li id="comuneli{{this.codigo}}" class="comuneli">
 												<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+												<div class="alert alert-info cprospects"><p>{{comunecount codigo}} Referidos</p></div>
 												{{#if isInRole 'admin,techsup,Lider Zona'}}
 													<div class="optset">
 														<button title="detalles" cc="{{this.codigo}}" type="button" class="btn btn-info areadetail">
@@ -51,6 +58,7 @@
 													{{#each quadrant codigo}}
 														<li id="cuadli{{this.codigo}}" class="cuadli">
 															<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+															<div class="alert alert-info cprospects"><p>{{quadrantcount codigo}} Referidos</p></div>
 															{{#if isInRole 'admin,techsup,Lider Zona, Lider Comuna'}}
 																<div class="optset">
 																	<button title="detalles" cc="{{this.codigo}}" type="button" class="btn btn-info areadetail">
@@ -73,6 +81,7 @@
 																		<h5><a href=""><i>
 																			{{this.profile.tipo}} - {{this.profile.cc}} - {{this.profile.nombres}} {{this.profile.apellidos}} - {{this.profile.email}}
 																		</i></a></h5>
+																		<div class="alert alert-info cprospects"><p>{{cuadleaderscount profile.cc}} Referidos</p></div>
 																		{{#if isInRole 'admin,techsup,Lider Zona, Lider Comuna'}}
 																			<div class="optset">
 																				<button cc="{{this.profile.cc}}" type="button" class="btn btn-info coldetail">
