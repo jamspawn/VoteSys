@@ -1,43 +1,43 @@
 Template.adminNav.events({
-	'click button': function(e){
+	'click .addbutton': function(e){
 		var elemento = e.currentTarget.value;
 		console.log(elemento);
 		if(elemento == 'marea'){
 			//alert('agregaras un area');
-			Router.go('addArea');
+			window.open(Router.url('addArea'));
 		}
 		else if(elemento == 'mcolab'){
 			//alert('agregaras un colaborador');
-			Router.go('addColaborator');
+			window.open(Router.url('addColaborator'));
 		}
 		else if(elemento == 'mmult'){
 			//alert('agregaras un colaborador');
-			Router.go('addMultiplicator');
+			window.open(Router.url('addMultiplicator'));
 		}
 		else{
 			//alert('agregaras un prospecto');
-			Router.go('addProspect');
+			window.open(Router.url('addProspect',{multi:false}));
 		}
 	},
 
-	'click a': function(e){
-		e.preventDefault();
-		var list = $(e.currentTarget).parent().find('button').attr('value');
+	'click .listbutton': function(e){
+		//e.preventDefault();
+		var list = e.currentTarget.value;
 		if(list == 'marea'){
 			//alert('agregaras un area');
-			Router.go('listAreas');
+			window.open(Router.url('listAreas'));
 		}
 		else if(list == 'mcolab'){
 			//alert('agregaras un colaborador');
-			Router.go('listColaborators');
+			window.open(Router.url('listColaborators'));
 		}
 		else if(list == 'mmult'){
 			//alert('agregaras un colaborador');
-			Router.go('listMultiplicators');
+			window.open(Router.url('listMultiplicators'));
 		}
 		else{
 			//alert('veamos prospectos');
-			Router.go('listProspects');
+			window.open(Router.url('listProspects'));
 		}
 	}
 })

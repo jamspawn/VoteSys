@@ -1,28 +1,252 @@
 <template name="rawreferlist">
-	<div class="listcontainer">
-		<ul class="multiul">
-			<li id='multili0' class="multili">
-				<h5><a href=""><i>No asignado</i></a></h5>
-				<ul id='referul0' class="referul">
-					{{#each refers 'na'}}
-						<li class="referli">
-							{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
-						</li>
-					{{/each}}
-				</ul>
-			</li>
-			{{#each multipliers}}
-				<li id='multili{{this.cedula}}' class="multili">
-					<h5><a href=""><i>{{this.cedula}} - {{this.nombres}} {{this.apellidos}}</i></a></h5>
-					<ul id='referul{{this.cedula}}' class="referul">
-						{{#each refers cedula}}
-							<li class="referli">
-								{{this.cedula}} - {{this.nombres}} {{this.apellidos}}
+	<div class="listcontainer panel panel-default">
+		<div class="panel-heading"><b>Listado</b></div>
+		<div class="table-responsive">
+			<table class="table table-striped table-hover">
+				<tbody>
+					<ul class="zoneul">
+						{{#each zone}}
+							<li id="zoneli{{this.codigo}}" class="zoneli">
+								<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+								{{#if isInRole 'admin,techsup'}}
+									<div class="optset">
+										<button title="detalles" cc="{{this.codigo}}" type="button" class="btn btn-info areadetail">
+						            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+						            	</button>
+						            	<button title="Ver referidos" tipo="{{this.tipo}}" cc="{{this.codigo}}" type="button" class="btn btn-default prfilter">
+						            		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						            	</button>
+						            	<button title="editar" cc="{{this.codigo}}" type="button" class="btn btn-warning areaedit">
+						            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+						            	</button>
+						            	<button title="eliminar" cc="{{this.codigo}}" type="button" class="btn btn-danger areadelete">
+						            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						            	</button>
+						            </div>
+						        {{/if}}
+								<ul id="comuneul{{this.codigo}}" class="comuneul">
+
+										{{#each comune codigo}}
+
+
+											<li id="comuneli{{this.codigo}}" class="comuneli">
+												<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+												{{#if isInRole 'admin,techsup,Lider Zona'}}
+													<div class="optset">
+														<button title="detalles" cc="{{this.codigo}}" type="button" class="btn btn-info areadetail">
+										            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+										            	</button>
+										            	<button title="Ver referidos" tipo="{{this.tipo}}" cc="{{this.codigo}}" type="button" class="btn btn-default prfilter">
+										            		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+										            	</button>
+										            	<button title="editar" cc="{{this.codigo}}" type="button" class="btn btn-warning areaedit">
+										            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+										            	</button>
+										            	<button title="eliminar" cc="{{this.codigo}}" type="button" class="btn btn-danger areadelete">
+										            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										            	</button>
+										            </div>
+										        {{/if}}
+												<ul id="cuadul{{this.codigo}}" class="cuadul">
+													{{#each quadrant codigo}}
+														<li id="cuadli{{this.codigo}}" class="cuadli">
+															<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+															{{#if isInRole 'admin,techsup,Lider Zona, Lider Comuna'}}
+																<div class="optset">
+																	<button title="detalles" cc="{{this.codigo}}" type="button" class="btn btn-info areadetail">
+													            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+													            	</button>
+													            	<button title="Ver referidos" tipo="{{this.tipo}}" cc="{{this.codigo}}" type="button" class="btn btn-default prfilter">
+													            		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+													            	</button>
+													            	<button title="editar" cc="{{this.codigo}}" type="button" class="btn btn-warning areaedit">
+													            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+													            	</button>
+													            	<button title="eliminar" cc="{{this.codigo}}" type="button" class="btn btn-danger areadelete">
+													            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+													            	</button>
+													            </div>
+													        {{/if}}
+															<ul id="cuadlul{{this.codigo}}" class="cuadlul">
+																{{#each cuadleaders codigo}}
+																	<li id="cuadlli{{this.profile.cc}}" cc="{{this.profile.cc}}" class="cuadlli">
+																		<h5><a href=""><i>
+																			{{this.profile.tipo}} - {{this.profile.cc}} - {{this.profile.nombres}} {{this.profile.apellidos}} - {{this.profile.email}}
+																		</i></a></h5>
+																		{{#if isInRole 'admin,techsup,Lider Zona, Lider Comuna'}}
+																			<div class="optset">
+																				<button cc="{{this.profile.cc}}" type="button" class="btn btn-info coldetail">
+																            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+																            	</button>
+																            	<button title="Ver referidos" tipo="{{this.profile.tipo}}" zona="{{this.profile.zona}}" comu="{{this.profile.comu}}" cuad="{{this.profile.cuad}}" type="button" class="btn btn-default colprfilter">
+																            		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+																            	</button>
+																            	<button cc="{{this.profile.cc}}" type="button" class="btn btn-warning coledit">
+																            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+																            	</button>
+																            	<button cc="{{this.profile.cc}}" type="button" class="btn btn-danger coldelete">
+																            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+																            	</button>
+																            </div>
+																        {{/if}}
+																		<ul id="multiul{{this.profile.cc}}" class="multiul">
+																			<li id='multilicl{{this.profile.cc}}' class="multili">
+																				<h5><a href=""><i>Sin asignar</i></a></h5>
+																				<div class="optset">
+																				{{#unless isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}	
+																	            	<button id="addrefer" title="Añadir referido no asignado" type="button" cc="false" value="mprosp" class="btn btn-success">
+																	            		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+																	            	</button>
+																	            {{/unless}}
+																	            </div>
+																				<ul id='referulcl{{this.profile.cc}}' class="referul">
+																					{{#each narefers profile.cc}}
+																						<li class="referli">
+																							<h5>{{this.cedula}} - {{this.nombres}} {{this.apellidos}}</h5>
+																							<div class="optset">
+																								<button title="Ver detalles" cc="{{this.cedula}}" type="button" class="btn btn-info prdetail">
+																				            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+																				            	</button>
+																				            	{{#unless this.esMulti}}
+																					            	<button title="Convertir en multiplicador" cc="{{this.cedula}}" id="tomulti" ism="{{this.esMulti}}" type="button" data-toggle="modal" data-target="#prosptomult" class="btn btn-success prosptomult">
+																					            		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+																					            	</button>
+																					            {{/unless}}
+																				            	<button title="Editar" cc="{{this.cedula}}" type="button" class="btn btn-warning">
+																				            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+																				            	</button>
+																				            	{{#unless this.esMulti}}
+																					            	<button title ="{{#unless this.asoMulti}}Asignar multiplicador{{/unless}}{{#if this.asoMulti}}Cambiar multilicador asignado : {{this.asoMulti}}{{/if}}" cc="{{this.cedula}}" cp="{{cuadleaders.profile.cc}}" asm="{{this.asoMulti}}" type="button" data-toggle="modal" data-target="#prosasomult" class="btn btn-primary asignmulbutn">
+																					            		<span class="{{#unless this.asoMulti}}glyphicon glyphicon-flag{{/unless}}{{#if this.asoMulti}}glyphicon glyphicon-refresh{{/if}}" aria-hidden="true"></span>
+																					            	</button>
+																					            {{/unless}}
+																				            	<button title="Eliminar" cc="{{this.cedula}}" type="button" class="btn btn-danger">
+																				            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+																				            	</button>
+																				            </div>
+																						</li>
+																					{{/each}}
+																				</ul>
+																			</li>
+																			{{#each multipliers profile.cc}}
+																				<li id='multili{{this.cedula}}' class="multili">
+																					<h5><a href=""><i>Multiplicador {{this.cedula}} - {{this.nombres}} {{this.apellidos}}</i></a></h5>
+																					<div class="optset">
+																						<button title="Ver detalles" cc="{{this.cedula}}" type="button" class="btn btn-info prdetail">
+																		            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+																		            	</button>
+
+																		            	<!--<button title="Ver referidos" cc="mult{{this.cedula}}" type="button" class="btn btn-default prfilter">
+																		            		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+																		            	</button>-->
+																		            	
+																		            	<button title="Editar" cc="{{this.cedula}}" type="button" class="btn btn-warning">
+																		            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+																		            	</button>
+																		            	{{#unless isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
+																			            	<button id="addrefer" title="Asignar referido" type="button" cc="{{this.cedula}}" value="mprosp" class="btn btn-success">
+																			            		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+																			            	</button>
+																			            {{/unless}}
+																		            	<button title="Eliminar" cc="{{this.cedula}}" type="button" class="btn btn-danger">
+																		            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+																		            	</button>
+																		            </div>
+																					<ul id='referul{{this.cedula}}' class="referul">
+																						{{#each refers cedula}}
+																							<li class="referli">
+																								<h5>{{this.cedula}} - {{this.nombres}} {{this.apellidos}}</h5>
+																								<div class="optset">
+																									<button title="Ver detalles" cc="{{this.cedula}}" type="button" class="btn btn-info prdetail">
+																					            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+																					            	</button>
+																					            	{{#unless this.esMulti}}
+																						            	<button title="Convertir en multiplicador" id="tomulti" cc="{{this.cedula}}" ism="{{this.esMulti}}" type="button" data-toggle="modal" data-target="#prosptomult" class="btn btn-success prosptomult">
+																						            		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+																						            	</button>
+																						            {{/unless}}
+																					            	<button title="Editar" cc="{{this.cedula}}" type="button" class="btn btn-warning">
+																					            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+																					            	</button>
+																					            	
+																					            	{{#unless this.esMulti}}
+																						            	<button title ="{{#unless this.asoMulti}}Asignar multiplicador{{/unless}}{{#if this.asoMulti}}Cambiar multilicador asignado : {{this.asoMulti}}{{/if}}" cc="{{this.cedula}}" cp="t{{cuadleaders.profile.cc}}" asm="{{this.asoMulti}}" type="button" data-toggle="modal" data-target="#prosasomult" class="btn btn-primary asignmulbutn">
+																						            		<span class="{{#unless this.asoMulti}}glyphicon glyphicon-flag{{/unless}}{{#if this.asoMulti}}glyphicon glyphicon-refresh{{/if}}" aria-hidden="true"></span>
+																						            	</button>
+																						            {{/unless}}
+
+																					            	<button title="Eliminar" cc="{{this.cedula}}" type="button" class="btn btn-danger">
+																					            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+																					            	</button>
+																					            </div>
+																							</li>
+																							
+																						{{/each}}
+																					</ul>
+																				</li>
+																			{{/each}}
+																		</ul>
+																	</li>
+																{{/each}}
+															</ul>
+														</li>
+													{{/each}}
+												</ul>
+											</li>
+
+										{{/each}}
+										
+								</ul>
 							</li>
 						{{/each}}
 					</ul>
-				</li>
-			{{/each}}
-		</ul>
+				</tbody>
+			</table>
+		</div>
 	</div>
+	<!-- bootstrap modals n' stuff -->
+
+		<div id="prosptomult" class="modal fade">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		        <h4 class="modal-title">Convertir en multiplicador</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>Esta apunto de convertir a esta persona en un multiplicador dentro del sistema</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button id="mtpropsclear" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		        <button id="mtprosp" type="button" class="btn btn-primary">Continuar</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<!-- asignment multi -->
+		<div id="prosasomult" class="modal fade">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		        <h4 class="modal-title">Asignar multiplicador</h4>
+		      </div>
+
+		      <div class="modal-body">
+		      	<select id="asimult">
+			        {{#each multipliah}}
+						
+						<option value="{{this.cedula}}">{{this.cedula}} - {{this.nombres}} {{this.apellidos}}</option>
+							
+					{{/each}}
+				</select>
+		      </div>
+		      <div class="modal-footer">
+		        <button id="prosasoclear" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		        <button id="prosaso" type="button" class="btn btn-primary">Continuar</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 </template>
