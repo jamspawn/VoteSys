@@ -55,7 +55,7 @@ Template.addArea.events({
 	    		}
 	    		if(ae == 0){
 	    			Meteor.call('addArea',area,function(error, result){
-	    				alert(error+' '+result);
+	    				error,result;
 	    			});
 	    			alert(area.tip+' creada con el codigo '+area.zon+''+area.com+''+area.cod);
 						
