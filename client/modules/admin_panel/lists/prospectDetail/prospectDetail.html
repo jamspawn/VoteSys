@@ -47,8 +47,10 @@
 			</div>
 			  
 		</div>
+		<input type="hidden" id="ln" value="{{longitud}}">
+		<input type="hidden" id="lt" value="{{latitud}}">
 		<div id="mapcontainer">
-			<img src="https://maps.googleapis.com/maps/api/staticmap?center={{longitud}},{{latitud}}&zoom=17&size=400x400&markers=color:blue%7Clabel:S%7C{{longitud}},{{latitud}}" />
+			<!--<img src="https://maps.googleapis.com/maps/api/staticmap?center={{longitud}},{{latitud}}&zoom=17&size=400x400&markers=color:blue%7Clabel:S%7C{{longitud}},{{latitud}}" />-->
 		</div>
 		{{>returnButton}}
 	{{/if}}

@@ -32,8 +32,8 @@ Template.addProspect.events({
 			prof : $('#pocu').val(),
 			matr : $('#pmat').val(),
 			notas: $('#pnotif').val(),
-			longi: posc.lat,
-			latit: posc.lon,
+			longi: posc.lon,
+			latit: posc.lat,
 			aso	 : pamul
 		}
 		
