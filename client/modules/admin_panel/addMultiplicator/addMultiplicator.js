@@ -36,9 +36,10 @@ Template.addMultiplicator.events({
 		if(loggedInUser){
 			var add = Meteor.call('addProspects',data,function(error,result){
 				error, result;
+				console.log(result);
 			});
-			console.log(JSON.stringify(add));
-			alert('Porspecto Ingresado');
+			
+			alert('Multiplicador Ingresado');
 		}
 	}
 
