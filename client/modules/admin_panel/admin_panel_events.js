@@ -2,7 +2,7 @@ Template.adminPanel.rendered = function(){
 	//var roles = Meteor.roles.find().count();
 	//Roles.addUsersToRoles(Meteor.user()._id, ['admin','techsup']);
 	//var m = Meteor.call('probandoMetodos','task', function(error, result){console.log(error,result)});
-	
+	$('body').css('background','');
 	var userid = Meteor.user()._id;
 
 	var ft = Roles.getRolesForUser(userid);

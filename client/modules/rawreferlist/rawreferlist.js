@@ -1,5 +1,33 @@
 Template.rawreferlist.helpers({
 
+	'colabtag' : function(areacode){
+		if(areacode.length == 2){
+			var q1 = Meteor.users.find({'profile.tipo':'Lider Zona','profile.zona':areacode});
+		}
+		else if(areacode.length == 4){
+			var q1 = Meteor.users.find({'profile.tipo':'Lider Comuna','profile.comu':areacode});
+		}
+
+		if(q1.count()>0){
+			var q2 = q1.fetch()[0];
+			var q3 = q1.fetch()[0].profile.updated;
+		}
+
+		if(q1.count()>0){
+			if(q3 == true){
+				var r = q2.profile.nombres+' '+q2.profile.apellidos+' - '+q2.profile.celular+' / '+q2.profile.telefono;
+			}
+			else{
+				var r = 'No actualizado';
+			}	
+		}
+		else{
+			var r = 'No asignado';
+		}
+		//var r = areacode.length;
+		return r;
+	},
+
 	'multipliah' : function(){
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
 		var tipo = iusr[0].profile.tipo;

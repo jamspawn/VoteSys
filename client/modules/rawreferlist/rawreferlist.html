@@ -13,6 +13,7 @@
 						{{#each zone}}
 							<li id="zoneli{{this.codigo}}" class="zoneli">
 								<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+								<div class="alert alert-info cprospects colabtag"><p>Zonal {{colabtag codigo}} </p></div>
 								<div class="alert alert-info cprospects"><p>{{zonecount codigo}} Referidos</p></div>
 								{{#if isInRole 'admin,techsup'}}
 									<div class="optset">
@@ -37,6 +38,7 @@
 
 											<li id="comuneli{{this.codigo}}" class="comuneli">
 												<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+												<div class="alert alert-info cprospects colabtag colabtag"><p>Comunal {{colabtag codigo}} </p></div>
 												<div class="alert alert-info cprospects"><p>{{comunecount codigo}} Referidos</p></div>
 												{{#if isInRole 'admin,techsup,Lider Zona'}}
 													<div class="optset">

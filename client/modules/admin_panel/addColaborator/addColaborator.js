@@ -101,7 +101,7 @@ Template.addColaborator.events({
 						colab.zon ='';
 						
 	    			}*/
-	    			alert(colab.tip+' creado con el usuario '+colab.cc+' y la clave '+colab.keyp+' \\n Los datos han sido enviados al correo correspondiente');
+	    			alert(colab.tip+' creado con el usuario '+colab.cc+' y la clave '+colab.keyp+' \n Los datos han sido enviados al correo correspondiente');
 						
 				}
 				else{

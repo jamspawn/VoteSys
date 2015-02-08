@@ -18,6 +18,7 @@ Template.loginform.rendered = function(){
 
 		Roles.addUsersToRoles(firstAdmin, ['admin','techsup']);
 	}*/
+	$('body').css('background','white')
 	Meteor.call('updateRoles',function(error, result){error, result});
 }
 
