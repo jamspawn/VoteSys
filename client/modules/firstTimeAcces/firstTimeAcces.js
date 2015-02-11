@@ -54,14 +54,19 @@ Template.firstTimeAcces.events({
 				//to method
 
 				Meteor.call('updateUser',data, function(error, result){
-					error,result
+					if(result == "existent"){
+						alert('no se ha podido completar, el nombre de usuario ingresado ya existe');
+					}
+					else if(result == "done"){
+						Meteor.logout(function(){
+							//console.log(ius[0].profile.updated);
+							alert('Proceso realizado con exito, \n Ingresa nuevamente con tu nueva informacion');
+							Router.go('login');
+						});
+					}
 				})
 
-				Meteor.logout(function(){
-					console.log(ius[0].profile.updated);
-					alert('Proceso realizado con exito, \n Ingresa nuevamente con tu nueva informacion');
-					Router.go('login');
-				});
+				
 			}
 			else{
 				alert('El usuario ya esta actualizado');

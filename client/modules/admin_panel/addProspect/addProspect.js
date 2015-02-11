@@ -40,22 +40,27 @@ Template.addProspect.events({
 		var loggedInUser = Meteor.user();
 		if(loggedInUser){
 			var add = Meteor.call('addProspects',data,function(error,result){
-				error, result;
+				if(result == 'done'){
+					alert('Porspecto Ingresado');
+					/* clearing stuff */
+					cate : $('#ptip').val('');
+					name : $('#pname').val('');
+					lname: $('#plname').val('');
+					cc	 : $('#pcedula').val('');
+					mail : $('#pemail').val('');
+					addr : $('#paddres').val('');
+					phon : $('#pphone').val('');
+					mobil: $('#pmobile').val('');
+					prof : $('#pocu').val('');
+					matr : $('#pmat').val('');
+					notas: $('#pnotif').val('');
+				}
+				else{
+					alert(result)
+				}
 			});
-			console.log(JSON.stringify(add));
-			alert('Porspecto Ingresado');
-			/* clearing stuff */
-				cate : $('#ptip').val('');
-				name : $('#pname').val('');
-				lname: $('#plname').val('');
-				cc	 : $('#pcedula').val('');
-				mail : $('#pemail').val('');
-				addr : $('#paddres').val('');
-				phon : $('#pphone').val('');
-				mobil: $('#pmobile').val('');
-				prof : $('#pocu').val('');
-				matr : $('#pmat').val('');
-				notas: $('#pnotif').val('');			
+			//console.log(JSON.stringify(add));
+						
 			/* clearing stuff */
 		}
 	}

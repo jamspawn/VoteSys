@@ -5,19 +5,21 @@ Template.adminPanel.rendered = function(){
 	$('body').css('background','');
 	var userid = Meteor.user()._id;
 
-	var ft = Roles.getRolesForUser(userid);
+	if(userid != undefined){
+		var ft = Roles.getRolesForUser(userid);
 
-	if(ft == ''){
-		Router.go('firstTimeAcces');
+		if(ft == ''){
+			Router.go('firstTimeAcces');
+		}
+
+		if(Roles.userIsInRole(userid, 'techsup')){
+			Meteor.call('fixingTechsupp',userid,function(error,result){
+				error,result
+			})
+		}
+
+		var username = Meteor.user().username;
 	}
-
-	if(Roles.userIsInRole(userid, 'techsup')){
-		Meteor.call('fixingTechsupp',userid,function(error,result){
-			error,result
-		})
-	}
-
-	var username = Meteor.user().username;
 	//console.log(username+' -> '+userid);
 	/*if (username == 'Techsupp'){
 		var roles = ['admin', 'techsup'];

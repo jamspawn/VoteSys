@@ -104,10 +104,25 @@ Meteor.methods({
   	var loggedInUser = Meteor.user()
 
     if (!loggedInUser) {
-      throw new Meteor.Error(403, "Access denied")
+      return('Este usuario no esta logueado, como llego aqui?');
     }
     else{
       if(!user.isMultiplicator){
+        var existlead = false;
+        if(user.tip != "Lider Cuadrante"){
+          existlead = Meteor.users.find({'profile.tipo':user.tip, 'profile.zona':user.zone, 'profile.comu':user.comu, 'profile.cuad':user.squa}).count();
+          if(existlead > 0){
+            existlead = true;
+          }
+        }
+        var exist = Meteor.users.find({'profile.cc':user.cc}).count();
+        if(exist > 0){
+          return 'Esta cedula ya ha sido registrada en el sistema';
+        }
+        if(existlead == true){
+          return 'Ya existe el '+user.tip+' de esta area';
+        }
+
         var id = Accounts.createUser({
           username : user.cc,
           //email: user.email,
@@ -129,6 +144,7 @@ Meteor.methods({
           subject: "Acceso plataforma",
           text: "Por favor ingresa a votesys.meteor.com con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
         }); 
+        return 'done';
       }
       else{
         /*var origin = Prospectos.find({cedula:user.cc}).fetch()[0];
@@ -174,52 +190,59 @@ Meteor.methods({
     var userData = Meteor.users.find({_id:uId}).fetch();
   	var tempProfile = userData[0].profile;
 
-  	Meteor.users.update({_id:Meteor.userId()},{ $unset : {'profile.keyp':''}});
-    if(!data.isMultiplicator){
-    	Meteor.users.update({_id:Meteor.userId()},{
-    		$set : {
-    			username:data.user,
-  	  		'profile.nombres':data.name,
-  	  		'profile.apellidos':data.lname,
-  	  		'profile.direccion':data.addr,
-  	  		'profile.telefono':data.phon,
-  	  		'profile.celular':data.mobi,
-  	  		'profile.updated':true
-    		}
-    	});
+    var exist = Meteor.users.find({username:data.user}).count();
+    if(exist > 0 && userData[0].username != data.user){
+      return 'existent';
     }
     else{
-      Meteor.users.update({_id:Meteor.userId()},{
-        $set : {
-          username:data.user,
-          'profile.updated':true
-        }
-      });
+    	Meteor.users.update({_id:Meteor.userId()},{ $unset : {'profile.keyp':''}});
+      if(!data.isMultiplicator){
+      	Meteor.users.update({_id:Meteor.userId()},{
+      		$set : {
+      			username:data.user,
+    	  		'profile.nombres':data.name,
+    	  		'profile.apellidos':data.lname,
+    	  		'profile.direccion':data.addr,
+    	  		'profile.telefono':data.phon,
+    	  		'profile.celular':data.mobi,
+    	  		'profile.updated':true
+      		}
+      	});
+      }
+      else{
+        Meteor.users.update({_id:Meteor.userId()},{
+          $set : {
+            username:data.user,
+            'profile.updated':true
+          }
+        });
+      }
+    	Accounts.setPassword(Meteor.userId(), data.pass);
+
+    	if(tempProfile.tipo == 'Lider Zona'){
+    		var roles = ['Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'];
+    	}
+    	else if(tempProfile.tipo == 'Lider Comuna'){
+    		var roles = ['Lider Comuna','Lider Cuadrante','Multiplicador'];
+    	}
+    	else if(tempProfile.tipo == 'Lider Cuadrante'){
+    		var roles = ['Lider Cuadrante','Multiplicador'];
+    	}
+    	else{
+    		var roles = ['Multiplicador'];
+    	}  	
+
+    	Roles.addUsersToRoles(uId, roles);
+
+    	Email.send({
+    		from: "JuanPabloGalloStaff@JPG.com",
+    		to: tempProfile.email,
+    		subject: "Actualizacion de datos",
+    		text: "Actualizacion completada:\n Ahora puedes acceder al sistema con los siguientes datos \n usuario -> "+data.user+"\n  password -> "+data.pass+"\n Y actualiza tu información."
+    	});
+      return('done');
+    	//Meteor.users.update({_id:uId},{});
     }
-  	Accounts.setPassword(Meteor.userId(), data.pass);
-
-  	if(tempProfile.tipo == 'Lider Zona'){
-  		var roles = ['Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'];
-  	}
-  	else if(tempProfile.tipo == 'Lider Comuna'){
-  		var roles = ['Lider Comuna','Lider Cuadrante','Multiplicador'];
-  	}
-  	else if(tempProfile.tipo == 'Lider Cuadrante'){
-  		var roles = ['Lider Cuadrante','Multiplicador'];
-  	}
-  	else{
-  		var roles = ['Multiplicador'];
-  	}  	
-
-  	Roles.addUsersToRoles(uId, roles);
-
-  	Email.send({
-  		from: "JuanPabloGalloStaff@JPG.com",
-  		to: tempProfile.email,
-  		subject: "Actualizacion de datos",
-  		text: "Actualizacion completada:\n Ahora puedes acceder al sistema con los siguientes datos \n usuario -> "+data.user+"\n  password -> "+data.pass+"\n Y actualiza tu información."
-  	});
-  	//Meteor.users.update({_id:uId},{});
   },
 
   fixingTechsupp:function(userId){
@@ -276,7 +299,7 @@ Meteor.methods({
 
     var exist = Prospectos.find({cedula:data.cc}).count();
     if(exist>0){
-      throw new Meteor.Error(500, "Registrado con esta cedula");
+      return 'Ya existe un referido con esta cedula';
     }
     else{
       Prospectos.insert({
@@ -302,7 +325,7 @@ Meteor.methods({
 
       });
 
-      return 'Creado con exito'
+      return 'done'
     }
 
   },
@@ -315,5 +338,62 @@ Meteor.methods({
     else{
       Prospectos.update({cedula:user.cc},{$set : {asoMulti:user.asm}});
     }
+  },
+
+  trasMult: function(data){
+    var loggedInUser = Meteor.user()
+    if (!loggedInUser) {
+      return 'NO esta logueado, como ha llegado hasta aqui?'
+    }
+    else{
+      //Prospectos.update({cedula:user.cc},{$set : {asoMulti:user.asm}});
+      Prospectos.update({asoMulti:data.multi},{$set : {zona:data.zona, comuna:data.comuna, cuadrante:data.cuadrante, creadoPor:data.lider}});
+      Prospectos.update({cedula:data.multi},{$set : {zona:data.zona, comuna:data.comuna, cuadrante:data.cuadrante, creadoPor:data.lider}});
+      return 'Multiplicador trasladado con éxito';
+    }
+  },
+
+  remoArea: function(code){
+     var loggedInUser = Meteor.user()
+      if (!loggedInUser) {
+        return 'acceso no permitido';
+      }
+      else{
+        Areas.remove({codigo:code});
+        return 'Area Eliminada, si habia informacion guardada en esta area \n podra acceder nuevamente a ella \n creando una nueva area con el mismo codigo';
+      }
+  },
+
+  remoColab: function(code){
+     var loggedInUser = Meteor.user()
+      if (!loggedInUser) {
+        return 'acceso no permitido';
+      }
+      else{
+        Meteor.user.remove({'profile.cc':code});
+        return 'Colaborador Eliminado, si este colaborador tenia información guardada \n podrá acceder nuevamente a ella \n asignando un nuevo colaborador a esta Area';
+      }
+  },
+
+  remoMulti: function(code){
+     var loggedInUser = Meteor.user()
+      if (!loggedInUser) {
+        return 'acceso no permitido';
+      }
+      else{
+        Meteor.user.remove({'profile.cc':code});
+        return 'Multiplicador Eliminado, todos los prospectos de este multiplicador quedaran en el grupo "Sin asignar"';
+      }
+  },
+
+  remoProsp: function(code){
+     var loggedInUser = Meteor.user()
+      if (!loggedInUser) {
+        return 'acceso no permitido';
+      }
+      else{
+        Meteor.user.remove({'profile.cc':code});
+        return 'Referido eliminado';
+      }
   }
 })

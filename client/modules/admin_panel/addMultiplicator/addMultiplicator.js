@@ -35,11 +35,16 @@ Template.addMultiplicator.events({
 		var loggedInUser = Meteor.user();
 		if(loggedInUser){
 			var add = Meteor.call('addProspects',data,function(error,result){
-				error, result;
-				console.log(result);
+				//error, result;
+				//console.log(result);
+				if(result == 'done'){
+					alert('Multiplicador Ingresado');
+				}
+				else{
+					alert(result);
+				}
 			});
 			
-			alert('Multiplicador Ingresado');
 		}
 	}
 

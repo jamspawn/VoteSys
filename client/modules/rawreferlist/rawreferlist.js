@@ -1,4 +1,67 @@
 Template.rawreferlist.helpers({
+	'zonah' : function(){
+		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+		var tipo = iusr[0].profile.tipo;
+		var zone = iusr[0].profile.zona;
+		var comu = iusr[0].profile.comu;
+		var cuad = iusr[0].profile.cuad;
+		if(tipo == "Lider Comuna"){
+			var p = Areas.find({tipo:'Zona',codigo:zone});
+		}
+		else if(tipo == "Lider Zona"){
+			var p = Areas.find({tipo:'Zona',codigo:zone});
+		}
+		else if(tipo == "techsup" || tipo == "admin"){
+			var p = Areas.find({tipo:'Zona'});
+		}
+		
+		return p;
+	},
+
+	'comunah' : function(){
+		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+		var tipo = iusr[0].profile.tipo;
+		var zone = iusr[0].profile.zona;
+		var comu = iusr[0].profile.comu;
+		var cuad = iusr[0].profile.cuad;
+		if(tipo == "Lider Comuna"){
+			var p = Areas.find({tipo:'Comuna',codigo:comu});
+		}
+		else if(tipo == "Lider Zona"){
+			var p = Areas.find({tipo:'Comuna',zona:zone});
+		}
+		else if(tipo == "techsup" || tipo == "admin"){
+			var p = Areas.find({tipo:'Comuna',zona:Session.get('zonah')});
+		}
+		
+		return p;
+	},
+
+	'quadrah' : function(){
+		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+		var tipo = iusr[0].profile.tipo;
+		var zone = iusr[0].profile.zona;
+		var comu = iusr[0].profile.comu;
+		var cuad = iusr[0].profile.cuad;
+		var p = Areas.find({tipo:'Cuadrante',comuna:Session.get('comunah')});		
+		return p;
+	},
+
+	'quadrahlead' : function(){
+		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+		var tipo = iusr[0].profile.tipo;
+		var zone = iusr[0].profile.zona;
+		var comu = iusr[0].profile.comu;
+		var cuad = iusr[0].profile.cuad;
+		var cc = iusr[0].profile.cc;
+		if(Session.get('quadrah')!=null){
+			var p = Meteor.users.find({'profile.cuad':Session.get('quadrah')})
+		}
+		else{
+			p = null;
+		}
+		return p;
+	},
 
 	'colabtag' : function(areacode){
 		if(areacode.length == 2){
@@ -9,15 +72,15 @@ Template.rawreferlist.helpers({
 		}
 
 		if(q1.count()>0){
-			var q2 = q1.fetch()[0];
-			var q3 = q1.fetch()[0].profile.updated;
+			q2 = q1.fetch()[0];
+			q3 = q1.fetch()[0].profile.updated;
 		}
 
 		if(q1.count()>0){
 			if(q3 == true){
 				var r = q2.profile.nombres+' '+q2.profile.apellidos+' - '+q2.profile.celular+' / '+q2.profile.telefono;
 			}
-			else{
+			else {
 				var r = 'No actualizado';
 			}	
 		}
@@ -60,7 +123,7 @@ Template.rawreferlist.helpers({
 			var p = Areas.find({tipo:'Zona',codigo:zone});
 		}
 		else if(tipo == "techsup" || tipo == "admin"){
-			var p = Areas.find({tipo:'Zona'});
+			var p = Areas.find({tipo:'Zona'}, {sort: {codigo:1}});
 		}
 		
 		return p;
@@ -203,6 +266,10 @@ Template.rawreferlist.helpers({
 })
 
 Template.rawreferlist.rendered = function(){
+	Session.set('zonah', null);
+	Session.set('comunah', null);
+	Session.set('quadrah', null);
+	Session.set('quadrahlead', null);
 	listraw = Meteor.subscribe('prospectos');
 	listrawar = Meteor.subscribe('areas');
 	listrawcol = Meteor.subscribe('colaboradoresDatos');
@@ -330,6 +397,7 @@ Template.rawreferlist.events({
 				data = '';
 			},
 
+
 			'click #mtprosp' : function(e){
 				e.stopPropagation();
 				//alert('here')
@@ -383,8 +451,94 @@ Template.rawreferlist.events({
 					asm : false
 				}
 				//alert(JSON.stringify(data));		
-			}
+			},
+
+			'click .changecuadlead' : function(e){
+				e.stopPropagation();
+				data = '';
+				Session.set('currentMulti', $(e.currentTarget).attr('cc'));
+				$('#multcuadlead').modal('show');
+			},
+
+			'change #asizone' : function(e){
+				Session.set('zonah', $(e.currentTarget).val());
+				Session.set('comunah', null);
+				Session.set('quadrah', null);
+				Session.set('quadrahlead', null);
+			},
+
+			'change #asicomu' : function(e){
+				Session.set('comunah', $(e.currentTarget).val());
+				Session.set('quadrah', null);
+				Session.set('quadrahlead', null);
+			},
+
+			'change #asiquad' : function(e){
+				Session.set('quadrah', $(e.currentTarget).val());
+				Session.set('quadrahlead', null);
+			},
+
+			'change #asiquadlead' : function(e){
+				Session.set('quadrahlead', $(e.currentTarget).val());
+			},
+
+			'click #multcuadleadclear' : function(e){
+				data = '';
+			},
+
+			'click #multquadgo' : function(e){
+				//alert('here')
+				data = {
+					zona:Session.get('zonah'),
+					comuna:Session.get('comunah'),
+					cuadrante:Session.get('quadrah'),
+					lider:Session.get('quadrahlead'),
+					multi:Session.get('currentMulti')
+				}
+				//data.asm = $('#asimult').val();
+				if(data.zona == null || data.comuna==null || data.cuadrante==null || data.lider==null || data.multi==null){
+					alert('Falta informacion para realizar el traslado');
+				}
+				else{
+					Meteor.call('trasMult', data, function(error,result){
+						//error,result
+						alert(result);
+						$('#multcuadleadclear').click();
+					})
+					//alert(JSON.stringify(data));
+					//alert('proceso completado');
+					//$('#prosasoclear').click();
+				}
+			},
 		/*mult and prosp special options*/
+
+		/* Delete stuff */
+
+			'click .areadelete' : function(e){
+				var code = $(e.currentTarget).attr('cc');
+				var r = confirm("Esta apunto de eliminar esta area");
+				if (r == true) {
+				    Meteor.call('remoArea', code, function(error,result){
+						//error,result
+						alert(result);
+						//$('#multcuadleadclear').click();
+					})
+				}
+				
+			},
+			'click .coldelete' : function(e){
+				var code = $(e.currentTarget).attr('cc');
+				var r = confirm("Esta apunto de eliminar este colaborador");
+				if (r == true) {
+				    Meteor.call('remoColab', code, function(error,result){
+						//error,result
+						alert(result);
+						//$('#multcuadleadclear').click();
+					})
+				}
+			}
+
+		/* Delete stuff */
 
 	/*options buttons*/
 })

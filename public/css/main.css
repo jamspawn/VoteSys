@@ -8,7 +8,13 @@ header{
 	height: 140px;
 	background: none repeat scroll 0% 0% #FFF;
 	color: #F00;
-	border-bottom: 20px solid #F00;
+	border-bottom: 20px solid #C0333D;
+	text-align: center;
+}
+
+header img{
+	margin-top: 20px;
+	height: 80px;
 }
 
 header h1{
@@ -20,7 +26,7 @@ header h1{
 	margin-top: 0;
 	margin-bottom: 0;
 	text-decoration: underline;
-	*border-bottom: 2px solid #F00;
+	*border-bottom: 2px solid #C0333D;
 	*padding-top: 30px;
 }
 
@@ -100,6 +106,7 @@ footer p{
 #wrapper{
 	position: relative;
 	width: 100%;
+	padding-bottom: 60px;
 	*padding: 10px;
 	*margin-bottom: 60px;
 }
@@ -143,7 +150,7 @@ footer p{
 	max-width:1000px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 50px;
+	*margin-top: 50px;
 }
 
 .td-options .btn{
@@ -239,5 +246,13 @@ footer p{
 #jpg img{
 	width: 100%;
 	*border-right: 20px solid #F00;
+}
+
+#updateUser{
+	*padding: 200px;
+	margin: auto;
+	left: 0;
+	right: 0;
+	position: absolute;
 }
 
