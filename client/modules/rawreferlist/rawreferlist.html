@@ -12,7 +12,7 @@
 					<ul class="zoneul">
 						{{#each zone}}
 							<li id="zoneli{{this.codigo}}" class="zoneli">
-								<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+								<h5 class="lczone"><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
 								<div class="alert alert-info cprospects colabtag"><p>Zonal {{colabtag codigo}} </p></div>
 								<div class="alert alert-info cprospects"><p>{{zonecount codigo}} Referidos</p></div>
 								{{#if isInRole 'admin,techsup'}}
@@ -37,7 +37,7 @@
 
 
 											<li id="comuneli{{this.codigo}}" class="comuneli">
-												<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+												<h5 class="lccomu"><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
 												<div class="alert alert-info cprospects colabtag colabtag"><p>Comunal {{colabtag codigo}} </p></div>
 												<div class="alert alert-info cprospects"><p>{{comunecount codigo}} Referidos</p></div>
 												{{#if isInRole 'admin,techsup,Lider Zona'}}
@@ -59,7 +59,7 @@
 												<ul id="cuadul{{this.codigo}}" class="cuadul">
 													{{#each quadrant codigo}}
 														<li id="cuadli{{this.codigo}}" class="cuadli">
-															<h5><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
+															<h5 class="lccuad"><a href=""><i>{{this.tipo}} - {{this.codigo}} - {{this.descripcion}}</i></a></h5>
 															<div class="alert alert-info cprospects"><p>{{quadrantcount codigo}} Referidos</p></div>
 															{{#if isInRole 'admin,techsup,Lider Zona, Lider Comuna'}}
 																<div class="optset">
@@ -80,7 +80,7 @@
 															<ul id="cuadlul{{this.codigo}}" class="cuadlul">
 																{{#each cuadleaders codigo}}
 																	<li id="cuadlli{{this.profile.cc}}" cc="{{this.profile.cc}}" class="cuadlli">
-																		<h5><a href=""><i>
+																		<h5 class="lccuadli"><a href=""><i>
 																			Colab. Cuadrante - {{this.profile.cc}} - {{this.profile.nombres}} {{this.profile.apellidos}} - {{this.profile.email}}
 																		</i></a></h5>
 																		<div class="alert alert-info cprospects"><p>{{cuadleaderscount profile.cc}} Referidos</p></div>

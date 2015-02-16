@@ -36,10 +36,22 @@ Template.addColaborator.events({
 	},
 	'submit #add-col' : function(e){
 		e.preventDefault();
+		var role = $('#ctypei').val();
+		if(role == 'Zonal'){
+			role = 'Lider Zona';
+		}
+		else if(role == 'Comunal'){
+			role = 'Lider Comuna';
+		}
+
+		else if(role == 'Colab. Cuadrante'){
+			role = 'Lider Cuadrante';
+		}
+
 		var TEMP_accesCode = makepass();
 		var colab = {
 			keyp : TEMP_accesCode,
-			tip : $('#ctypei').val(),
+			tip : role,
 			cc : $('#cedula').val(),
 			email : $('#email').val(),
 			zone : $('#czone').val(),

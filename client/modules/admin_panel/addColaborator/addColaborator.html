@@ -21,13 +21,13 @@
 						        </button>
 						        <ul id="ctype" class="dropdown-menu pull-right">
 						        	{{#if isInRole 'admin,techsup'}}
-						          		<li id="lzo"><a href="#">Lider Zona</a></li>
+						          		<li id="lzo"><a val="Lider Zona" href="#">Zonal</a></li>
 						          	{{/if}}
 									{{#if isInRole 'admin,techsup,Lider Zona'}}
-						         		<li id="lco"><a href="#">Lider Comuna</a></li>
+						         		<li id="lco"><a val="Lider Comuna" href="#">Comunal</a></li>
 						         	{{/if}}
 									{{#if isInRole 'admin,techsup,Lider Zona,Lider Comuna'}}
-						          		<li id="lcu"><a href="#">Lider Cuadrante</a></li>
+						          		<li id="lcu"><a val="Lider Cuadrante" href="#">Colab. Cuadrante</a></li>
 						          	{{/if}}
 
 						        </ul>
