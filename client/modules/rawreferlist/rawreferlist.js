@@ -515,6 +515,7 @@ Template.rawreferlist.events({
 		/* Delete stuff */
 
 			'click .areadelete' : function(e){
+				e.stopPropagation();
 				var code = $(e.currentTarget).attr('cc');
 				var r = confirm("Esta apunto de eliminar esta area");
 				if (r == true) {
@@ -527,6 +528,7 @@ Template.rawreferlist.events({
 				
 			},
 			'click .coldelete' : function(e){
+				e.stopPropagation();
 				var code = $(e.currentTarget).attr('cc');
 				var r = confirm("Esta apunto de eliminar este colaborador");
 				if (r == true) {
@@ -536,7 +538,46 @@ Template.rawreferlist.events({
 						//$('#multcuadleadclear').click();
 					})
 				}
+			},
+			'click .refdelete' : function(e){
+				e.stopPropagation();
+				var code = $(e.currentTarget).attr('cc');
+				var r = confirm("Esta apunto de eliminar este referido");
+				if (r == true) {
+				    Meteor.call('remoProsp', code, function(error,result){
+						//error,result
+						alert(result);
+						//$('#multcuadleadclear').click();
+					})
+				}
+			},
+			'click .multdelete' : function(e){
+				e.stopPropagation();
+				codeToDrop = $(e.currentTarget).attr('cc');
+				$('#dropmulti').modal('show');
+			},
+
+			'click #multidrop1' : function(e){
+				Meteor.call('remoMultiandPros', codeToDrop, function(error,result){
+					//error,result
+					alert(result);
+					//$('#multcuadleadclear').click();
+				})
+				$('#dropmulti').modal('hide');
+			},
+			'click #multidrop2' : function(e){
+				Meteor.call('remoMulti', codeToDrop, function(error,result){
+					//error,result
+					alert(result);
+					//$('#multcuadleadclear').click();
+				})
+				$('#dropmulti').modal('hide');
+			},
+			'click #multidrop3' : function(e){
+				codeToDrop = '';
+				$('#dropmulti').modal('hide');
 			}
+
 
 		/* Delete stuff */
 

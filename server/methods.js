@@ -370,7 +370,7 @@ Meteor.methods({
         return 'acceso no permitido';
       }
       else{
-        Meteor.user.remove({'profile.cc':code});
+        Meteor.users.remove({'profile.cc':code});
         return 'Colaborador Eliminado, si este colaborador tenia información guardada \n podrá acceder nuevamente a ella \n asignando un nuevo colaborador a esta Area';
       }
   },
@@ -381,9 +381,22 @@ Meteor.methods({
         return 'acceso no permitido';
       }
       else{
-        Meteor.user.remove({'profile.cc':code});
-        return 'Multiplicador Eliminado, todos los prospectos de este multiplicador quedaran en el grupo "Sin asignar"';
+        Prospectos.remove({cedula : code});
+        Prospectos.update({asoMulti:code},{$set:{asoMulti : false}})
+        return 'Multiplicador Eliminado, todos los referidos de este multiplicador quedaran en el grupo "Sin asignar"';
       }
+  },
+
+  remoMultiandPros: function(code){
+    var loggedInUser = Meteor.user()
+    if (!loggedInUser) {
+      return 'acceso no permitido';
+    }
+    else{
+      Prospectos.remove({asoMulti : code});
+      Prospectos.remove({cedula : code});
+      return 'Multiplicador y referidos eliminados';
+    }
   },
 
   remoProsp: function(code){
@@ -392,7 +405,7 @@ Meteor.methods({
         return 'acceso no permitido';
       }
       else{
-        Meteor.user.remove({'profile.cc':code});
+        Prospectos.remove({cedula : code});
         return 'Referido eliminado';
       }
   }
