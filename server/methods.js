@@ -142,7 +142,7 @@ Meteor.methods({
           from: "JuanPabloGalloStaff@JPG.com",
           to: user.email,
           subject: "Acceso plataforma",
-          text: "Por favor ingresa a votesys.meteor.com con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
+          text: "Por favor ingresa a bd.juanpablogallo.co con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
         }); 
         return 'done';
       }
