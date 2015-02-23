@@ -228,9 +228,12 @@ Meteor.methods({
     	else if(tempProfile.tipo == 'Lider Cuadrante'){
     		var roles = ['Lider Cuadrante','Multiplicador'];
     	}
-    	else{
-    		var roles = ['Multiplicador'];
-    	}  	
+    	else if(tempProfile.tipo == 'admin'){
+    		var roles = ['admin','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'];
+    	}
+      else if(tempProfile.tipo == 'techsup'){
+        var roles = ['techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador'];
+      }   
 
     	Roles.addUsersToRoles(uId, roles);
 
@@ -280,6 +283,33 @@ Meteor.methods({
       }
     })
   },
+
+  initialD:function(){
+
+    var users = [
+      {name:"admin1",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin2",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin3",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin4",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}}
+    ];
+
+    _.each(users, function (user) {
+      var id;
+
+      var id = Accounts.createUser({
+        username : user.name,
+        //email: user.email,
+        password: user.pass,
+        profile: { 
+          updated: false,
+          keyp : user.pass,
+          tipo :user.profile.tipo,
+          cc :user.profile.cc,
+          email :user.email
+        }
+      })
+    })
+  }
 
   addProspects: function(data){
     var user = Meteor.users.find({_id : Meteor.userId()}).fetch();
