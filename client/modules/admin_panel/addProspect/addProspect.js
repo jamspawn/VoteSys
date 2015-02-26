@@ -21,7 +21,7 @@ Template.addProspect.events({
 			var pamul = false;
 		}
 		var data = {
-			cate : $('#ptip').val(),
+			//cate : $('#ptip').val(),
 			name : $('#pname').val(),
 			lname: $('#plname').val(),
 			cc	 : $('#pcedula').val(),
@@ -43,7 +43,7 @@ Template.addProspect.events({
 				if(result == 'done'){
 					alert('Porspecto Ingresado');
 					/* clearing stuff */
-					cate : $('#ptip').val('');
+					//cate : $('#ptip').val('');
 					name : $('#pname').val('');
 					lname: $('#plname').val('');
 					cc	 : $('#pcedula').val('');

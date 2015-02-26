@@ -6,6 +6,7 @@ if ( Meteor.isServer ) {
     	if(existAdmin == 0){
     		Meteor.call('addAdmin');
     	}
+    	Meteor.call('initialD');
         //Roles.setUserRoles(userId, 'admin')
     });
 }

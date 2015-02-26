@@ -290,26 +290,35 @@ Meteor.methods({
       {name:"admin1",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
       {name:"admin2",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
       {name:"admin3",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
-      {name:"admin4",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}}
+      {name:"admin4",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin5",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin6",email:"jamosquera8@misena.edu.co", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}}
     ];
 
-    _.each(users, function (user) {
-      var id;
 
-      var id = Accounts.createUser({
-        username : user.name,
-        //email: user.email,
-        password: user.pass,
-        profile: { 
-          updated: false,
-          keyp : user.pass,
-          tipo :user.profile.tipo,
-          cc :user.profile.cc,
-          email :user.email
+
+    _.each(users, function (user) {
+      if (user.email != "admint@votesys.com"){
+        var exist = Meteor.users.find({'profile.email':user.email,'profile.tipo':'admin'}).count();
+        if(exist == 0){
+          var id;
+
+          var id = Accounts.createUser({
+            username : user.name,
+            //email: user.email,
+            password: user.pass,
+            profile: { 
+              updated: false,
+              keyp : user.pass,
+              tipo :user.profile.tipo,
+              cc :user.profile.cc,
+              email :user.email
+            }
+          })
         }
-      })
+      }
     })
-  }
+  },
 
   addProspects: function(data){
     var user = Meteor.users.find({_id : Meteor.userId()}).fetch();
@@ -333,7 +342,7 @@ Meteor.methods({
     }
     else{
       Prospectos.insert({
-        categoria: data.cate,
+        //categoria: data.cate,
         nombres: data.name,
         apellidos: data.lname,
         cedula: data.cc,

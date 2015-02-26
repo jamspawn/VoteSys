@@ -17,7 +17,7 @@ Template.addMultiplicator.events({
 
 		var data = {
 			mult : true,
-			cate : $('#ptip').val(),
+			//cate : $('#ptip').val(),
 			name : $('#pname').val(),
 			lname: $('#plname').val(),
 			cc	 : $('#pcedula').val(),
