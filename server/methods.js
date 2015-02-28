@@ -248,6 +248,51 @@ Meteor.methods({
     }
   },
 
+  resetUser:function(data){
+    var loggedInUser = Meteor.user()
+
+    if (!loggedInUser) {
+      return('Este usuario no esta logueado, como llego aqui?');
+    }
+    else{
+       var q = Meteor.users.find({'profile.cc':data.cc}).fetch();
+        var user = {
+          cc:q[0].profile.cc,
+          keyp:data.keyp,
+          tip:q[0].profile.tipo,
+          email:q[0].profile.email,
+          zona:q[0].profile.zona,
+          comu:q[0].profile.comu,
+          cuad:q[0].profile.cuad
+        }
+
+        Meteor.users.remove({'profile.cc':data.cc});
+
+        var id = Accounts.createUser({
+          username : user.cc,
+          //email: user.email,
+          password: user.keyp,
+          profile: { 
+            updated: false,
+            keyp : user.keyp,
+            tipo :user.tip,
+            cc :user.cc,
+            email :user.email,
+            zona :user.zona,
+            comu :user.comu,
+            cuad :user.cuad
+          }
+        });
+        Email.send({
+          from: "JuanPabloGalloStaff@JPG.com",
+          to: user.email,
+          subject: "Acceso plataforma",
+          text: "Por favor ingresa a bd.juanpablogallo.co con los siguientes datos: \n usuario -> "+user.cc+"\n  password -> "+user.keyp+"\n Y actualiza tu información."
+        }); 
+        return 'Usuario reseteado, datos enviados al correo '+user.email+'';
+      }
+  },
+
   fixingTechsupp:function(userId){
   	/*var roles = ['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante','Multiplicador','Test'];
   	Roles.setUserRoles(userId, roles);
@@ -287,10 +332,10 @@ Meteor.methods({
   initialD:function(){
 
     var users = [
-      {name:"admin1",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
-      {name:"admin2",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
-      {name:"admin3",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
-      {name:"admin4",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin1",email:"juanpablogallomaya@gmail.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin2",email:"dfs_@hotmail.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin3",email:"jfvillada@utp.edu.co", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
+      {name:"admin4",email:"giovannyh@gmail.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
       {name:"admin5",email:"admint@votesys.com", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}},
       {name:"admin6",email:"jamosquera8@misena.edu.co", pass:"paragraphx96" , roles:['admin','techsup','Lider Zona','Lider Comuna','Lider Cuadrante'], profile:{tipo:'admin'}}
     ];
@@ -330,6 +375,7 @@ Meteor.methods({
 
     if(!data.mult){
       data.mult = false;
+      data.cate = 'prospecto';
     }
 
     if(!data.aso){
@@ -342,7 +388,7 @@ Meteor.methods({
     }
     else{
       Prospectos.insert({
-        //categoria: data.cate,
+        categoria: data.cate,
         nombres: data.name,
         apellidos: data.lname,
         cedula: data.cc,
@@ -439,13 +485,40 @@ Meteor.methods({
   },
 
   remoProsp: function(code){
-     var loggedInUser = Meteor.user()
-      if (!loggedInUser) {
-        return 'acceso no permitido';
+   var loggedInUser = Meteor.user()
+    if (!loggedInUser) {
+      return 'acceso no permitido';
+    }
+    else{
+      Prospectos.remove({cedula : code});
+      return 'Referido eliminado';
+    }
+  },
+
+  reubCuad:function(data){
+    var loggedInUser = Meteor.user()
+    if(!loggedInUser){
+      return 'acceso no permitido';
+    }else{
+      var malparidacomuna = data.comu;
+      var newcode = data.zona+''+malparidacomuna.substring(2,malparidacomuna.length)+''+data.ncode;
+      var exist = Areas.find({codigo:newcode}).count();
+      if(exist > 0){
+        return 'Ya existe un cuadrante con ese código';
       }
       else{
-        Prospectos.remove({cedula : code});
-        return 'Referido eliminado';
+        Areas.update({codigo:data.code},{$set:{comuna:data.comu, codigo:newcode}});
+
+        
+
+        Prospectos.update({cuadrante:data.code},{$set:{comuna:data.comu, cuadrante:newcode}});
+
+        Meteor.users.update({'profile.tipo':'Lider Cuadrante','profile.cuad':data.code},{$set:{'profile.comu':data.comu, 'profile.cuad':newcode}});
+        return 'done '+JSON.stringify(data)+' nc='+newcode;
       }
+    }
   }
 })
+
+//db.users.update({'profile.cc':'1088011177'}, {$set:{'profile.cuad':'020202','profile.comu':'0202'}})
+//db.prospectos.update({'cuadrante':'020202'}, {$set:{'cuadrante':'020306','comuna':'0203'}})

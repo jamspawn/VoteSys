@@ -1,4 +1,73 @@
 Template.rawreferlist.helpers({
+	'leadzonecode' : function(areacode){
+		var q1 = Meteor.users.find({'profile.tipo':'Lider Zona','profile.zona':areacode});
+
+		if(q1.count()>0){
+			q2 = q1.fetch()[0];
+			q3 = q1.fetch()[0].profile.updated;
+		}
+
+		if(q1.count()>0){
+			if(q3 == true){
+				var r = q2.profile.cc;
+			}
+			else {
+				var r = 'No actualizado';
+			}	
+		}
+		else{
+			var r = 'No asignado';
+		}
+		//var r = areacode.length;
+		return r;
+	},
+
+	'leadcomunecode' : function(areacode){
+		var q1 = Meteor.users.find({'profile.tipo':'Lider Comuna','profile.comu':areacode});
+
+		if(q1.count()>0){
+			q2 = q1.fetch()[0];
+			q3 = q1.fetch()[0].profile.updated;
+		}
+
+		if(q1.count()>0){
+			if(q3 == true){
+				var r = q2.profile.cc;
+			}
+			else {
+				var r = 'No actualizado';
+			}	
+		}
+		else{
+			var r = 'No asignado';
+		}
+		//var r = areacode.length;
+		return r;
+	},
+
+	/*'leadquadcode' : function(areacode){
+		var q1 = Meteor.users.find({'profile.tipo':'Lider Comuna','profile.comuna':areacode});
+
+		if(q1.count()>0){
+			q2 = q1.fetch()[0];
+			q3 = q1.fetch()[0].profile.updated;
+		}
+
+		if(q1.count()>0){
+			if(q3 == true){
+				var r = q2.profile.cc;
+			}
+			else {
+				var r = 'No actualizado';
+			}	
+		}
+		else{
+			var r = 'No asignado';
+		}
+		//var r = areacode.length;
+		return r;
+	},*/
+
 	'zonah' : function(){
 		var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
 		var tipo = iusr[0].profile.tipo;
@@ -67,7 +136,7 @@ Template.rawreferlist.helpers({
 		if(areacode.length == 2){
 			var q1 = Meteor.users.find({'profile.tipo':'Lider Zona','profile.zona':areacode});
 		}
-		else if(areacode.length == 4){
+		else if(areacode.length > 3 && areacode.length < 6){
 			var q1 = Meteor.users.find({'profile.tipo':'Lider Comuna','profile.comu':areacode});
 		}
 
@@ -576,10 +645,85 @@ Template.rawreferlist.events({
 			'click #multidrop3' : function(e){
 				codeToDrop = '';
 				$('#dropmulti').modal('hide');
-			}
+			},
 
 
 		/* Delete stuff */
+
+		/* Reset stuff */
+
+			'click .resetleader' : function(e){
+				e.stopPropagation();
+				data = {
+					cc:$(e.currentTarget).attr('cc'),
+					keyp:makepass()
+				}
+				$('#colabresete').modal('show');
+			},
+
+			'click #colreset' : function(e){
+				Meteor.call('resetUser', data, function(error,result){
+					//error,result
+					alert(result);
+					//$('#multcuadleadclear').click();
+				})
+				$('#colabresete').modal('hide')
+			},
+
+			'click #colresclear' : function(e){
+				data = '';
+			},
+
+		/* Reset stuff */
+		/* Relocate stuff */
+
+			'click .cuadreub' : function(e){
+				e.stopPropagation();
+				Session.set('zonah', $(e.currentTarget).attr('cccc'));
+				
+				data = {
+					code:$(e.currentTarget).attr('cc'),
+					zona:$(e.currentTarget).attr('cccc'),
+					comu:$(e.currentTarget).attr('ccc')
+				}
+				$('#reubcuad').modal('show');
+				//$('#asocomu').val($(e.currentTarget).attr('ccc'));
+			},
+
+			'click #reub' : function(e){
+				//alert(data.comu+' vs '+$('#asocomu').val());
+				
+					if(!$('#quadnew').val()){
+						alert('INGRESE UN NUEVO CODIGO DE CUADRANTE');
+					}
+					else{
+						data.comu = $('#asocomu').val();
+						data.ncode = $('#quadnew').val();
+						Meteor.call('reubCuad', data, function(error,result){
+							//error,result
+							var res= result;
+							//alert(res);
+							if(res=='done'){
+								alert('Proceso completado');
+								$('#reubcuad').modal('hide');
+								data = "";
+							}
+							else{
+								alert(res);
+							}
+							//$('#multcuadleadclear').click();
+						})
+						
+					}
+				
+			},
+
+			'click #reubclear' : function(e){
+				Session.set('zonah', '');
+				data = '';
+			},
+
+		/* Relocate stuff */
 
 	/*options buttons*/
 })
