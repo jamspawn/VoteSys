@@ -260,7 +260,7 @@ Meteor.methods({
           cc:q[0].profile.cc,
           keyp:data.keyp,
           tip:q[0].profile.tipo,
-          email:q[0].profile.email,
+          email:data.email,
           zona:q[0].profile.zona,
           comu:q[0].profile.comu,
           cuad:q[0].profile.cuad

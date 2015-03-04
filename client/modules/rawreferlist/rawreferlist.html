@@ -356,17 +356,20 @@
 		<div id="colabresete" class="modal fade">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		        <h4 class="modal-title">Resetear usuario</h4>
-		      </div>
-		      <div class="modal-body">
-		        <p>Esta apunto de resetear este usuario, el colaborador tendra que ingresar al sistema con los datos enviados a su correo y actualizar su información nuevamente</p>
-		      </div>
-		      <div class="modal-footer">
-		        <button id="colresclear" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-		        <button id="colreset" type="button" class="btn btn-primary">Continuar</button>
-		      </div>
+		    	<form id="reset" class="form-horizontal">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			        <h4 class="modal-title">Resetear usuario</h4>
+			      </div>
+			      <div class="modal-body">
+			        <p>Confirmar correo del usuario :</p>
+			        <input type='email' required id="emailreset" class="form-control" value="{{mailvalue}}">
+			      </div>
+			      <div class="modal-footer">
+			        <button id="colresclear" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			        <button id="colreset" class="btn btn-primary">Continuar</button>
+			      </div>
+			    </form>
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->

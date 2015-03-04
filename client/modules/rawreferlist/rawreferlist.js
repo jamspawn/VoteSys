@@ -8,12 +8,8 @@ Template.rawreferlist.helpers({
 		}
 
 		if(q1.count()>0){
-			if(q3 == true){
-				var r = q2.profile.cc;
-			}
-			else {
-				var r = 'No actualizado';
-			}	
+			Session.set('currentMail', q2.profile.email);
+			var r = q2.profile.cc;
 		}
 		else{
 			var r = 'No asignado';
@@ -31,18 +27,18 @@ Template.rawreferlist.helpers({
 		}
 
 		if(q1.count()>0){
-			if(q3 == true){
-				var r = q2.profile.cc;
-			}
-			else {
-				var r = 'No actualizado';
-			}	
+			Session.set('currentMail', q2.profile.email);
+			var r = q2.profile.cc;
 		}
 		else{
 			var r = 'No asignado';
 		}
 		//var r = areacode.length;
 		return r;
+	},
+
+	'mailvalue' : function(){
+		return Session.get('currentMail');
 	},
 
 	/*'leadquadcode' : function(areacode){
@@ -339,6 +335,7 @@ Template.rawreferlist.rendered = function(){
 	Session.set('comunah', null);
 	Session.set('quadrah', null);
 	Session.set('quadrahlead', null);
+	Session.set('currentMail', null);
 	listraw = Meteor.subscribe('prospectos');
 	listrawar = Meteor.subscribe('areas');
 	listrawcol = Meteor.subscribe('colaboradoresDatos');
@@ -662,12 +659,31 @@ Template.rawreferlist.events({
 			},
 
 			'click #colreset' : function(e){
-				Meteor.call('resetUser', data, function(error,result){
-					//error,result
-					alert(result);
-					//$('#multcuadleadclear').click();
-				})
-				$('#colabresete').modal('hide')
+				e.preventDefault();
+				data.email = $('#emailreset').val();
+				if(data.cc == 'No asignado'){
+					alert('aun no ha asignado un colaborador a esta area')
+				}
+				else{
+					if(!data.email){
+						alert('ingrese un correo porfavor');
+					}
+					else{
+						if(validarEmail(data.email)!= 'correcto'){
+							alert(validarEmail(data.email));
+						}
+						else{
+							Meteor.call('resetUser', data, function(error,result){
+								//error,result
+								alert(result);
+								//$('#multcuadleadclear').click();
+							})
+							$('#colabresete').modal('hide')
+						}
+						
+					}
+				}
+					
 			},
 
 			'click #colresclear' : function(e){
@@ -737,4 +753,14 @@ function makepass()
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
+}
+
+function validarEmail( email ) {
+    expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if ( !expr.test(email) ){
+        return("Error: La dirección de correo " + email + " es incorrecta.");
+    }
+    else{
+    	return 'correcto'
+    }
 }
