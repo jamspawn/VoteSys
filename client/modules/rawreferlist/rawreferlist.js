@@ -339,11 +339,6 @@ Template.rawreferlist.rendered = function(){
 	listraw = Meteor.subscribe('prospectos');
 	listrawar = Meteor.subscribe('areas');
 	listrawcol = Meteor.subscribe('colaboradoresDatos');
-	//colaboradoresDatos
-	if($('#cuadlli1088239100').length){
-		console.log('Samy is here');
-		$('#cuadlli1088239100').find('.referul').css('display','block');
-	}
 }
 
 Template.rawreferlist.events({
@@ -352,12 +347,9 @@ Template.rawreferlist.events({
 	},
 	'click .multili' : function(e){
 		var id = $(e.currentTarget).attr('id');
-		console.log(id);
 		var sulid = id.replace('multili','referul');
-		console.log(sulid)
-		$('#'+id).find(".referul" ).toggle(400);
-		//console.log($('#'+sulid).css('display'));
-		//$('#'+sulid).slideToggle(400);
+		$("[id='"+sulid+"']").toggle(400);
+		//$("ul[id='"+id+"']").toggle(400);
 	},
 	'click .referul' : function(e){
 		e.stopPropagation();
