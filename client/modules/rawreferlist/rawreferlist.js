@@ -348,8 +348,16 @@ Template.rawreferlist.events({
 	'click .multili' : function(e){
 		var id = $(e.currentTarget).attr('id');
 		var sulid = id.replace('multili','referul');
+		if($(e.currentTarget).hasClass('notas')){
+			if($("[id='"+sulid+"']").children().length == 0){
+				loadRefers('na',id);
+			}
+		}else{
+			if($("[id='"+sulid+"']").children().length == 0){
+				loadRefers(id);
+			}
+		}
 		$("[id='"+sulid+"']").toggle(400);
-		//$("ul[id='"+id+"']").toggle(400);
 	},
 	'click .referul' : function(e){
 		e.stopPropagation();
@@ -763,4 +771,72 @@ function validarEmail( email ) {
     else{
     	return 'correcto'
     }
+}
+
+function loadRefers(idMul, idCol){
+	var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+	var tipo = iusr[0].profile.tipo;
+	
+	console.log(idMul+' vs '+idCol);
+	if(idMul == 'na'){
+		var targetUl = idCol.replace('multilicl','referulcl');
+		var p = Prospectos.find({esMulti:false, asoMulti:false, creadoPor:idCol.replace('multilicl','')}).fetch();
+	}
+	else{
+		var targetUl = idMul.replace('multili','referul');
+		var p = Prospectos.find({esMulti:false, asoMulti:idMul.replace('multili','')}).fetch();
+	}
+	console.log(p);
+
+	for (i = 0; i<p.length; i++){
+		var cli = '';
+		var cli = '<li class="referli">\
+			<h5>'+p[i].cedula+' - '+p[i].nombres+' '+p[i].apellidos+'</h5>\
+			<div class="optset">\
+				<button title="Ver detalles" cc="'+p[i].cedula+'" type="button" class="btn btn-info prdetail">\
+            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>\
+            	</button>';
+
+        	if(p[i].esMulti != true){
+            	cli = cli+'<button title="Convertir en multiplicador" id="tomulti" cc="'+p[i].cedula+'" ism="'+p[i].esMulti+'" type="button" data-toggle="modal" data-target="#prosptomult" class="btn btn-success prosptomult">\
+            		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>\
+            	</button>';
+            }
+            /*cli = cli+'<button title="Editar" cc="'+p[i].cedula+'" type="button" class="btn btn-warning">
+            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            	</button>';*/
+            	
+        	if(p[i].esMulti != true){
+            	cli = cli+'<button title ="';
+            	if(p[i].asoMulti == false){
+            		cli = cli+'Asignar multiplicador';
+            	}
+
+            	else{
+            		cli = cli+'Cambiar multilicador asignado : '+p[i].asoMulti;
+            	}
+
+            	cli = cli+'" cc="'+p[i].cedula+'" cp="t'+p[i].creadoPor+'" asm="'+p[i].asoMulti+'" type="button" data-toggle="modal" data-target="#prosasomult" class="btn btn-primary asignmulbutn">\
+            		<span class="';
+
+            	if(p[i].asoMulti == false){
+            		cli = cli+'glyphicon glyphicon-flag';
+            	}
+            	else{
+            		cli = cli+'glyphicon glyphicon-refresh';
+            	}
+            	cli = cli+ ' asigmult" aria-hidden="true"></span>\
+            	</button>';
+            }
+
+            if(tipo =='Lider Cuadrante'){
+            	cli = cli +'<button title="Eliminar" cc="'+p[i].cedula+'" type="button" class="btn btn-danger refdelete">\
+            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>\
+            	</button>';
+            }
+           cli = cli+'</div>\
+			</li>';
+		$("[id='"+targetUl+"']").append(cli);
+		//$("[id='"+targetUl+"']").toggle(400);
+	}
 }

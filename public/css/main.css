@@ -284,3 +284,7 @@ footer p{
 	position: absolute;
 }
 
+#commentmultplay{
+	display: none;
+	float: left;
+}
