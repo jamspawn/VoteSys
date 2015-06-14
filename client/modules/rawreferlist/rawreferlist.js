@@ -381,6 +381,11 @@ Template.rawreferlist.events({
 	'click .cuadli' : function(e){
 		var id = $(e.currentTarget).attr('id');
 		var sulid = id.replace('cuadli','cuadlul');
+
+		if($("[id='"+sulid+"']").children().length == 0){
+			loadCuadl(id);
+		}
+
 		$('#'+sulid).toggle(400);
 	},
 	'click .cuadlul' : function(e){
@@ -389,7 +394,13 @@ Template.rawreferlist.events({
 	'click .cuadlli' : function(e){
 		var id = $(e.currentTarget).attr('id');
 		var sulid = id.replace('cuadlli','multiul');
+		console.log($("[id='"+sulid+"']").children().length);
+		if($("[id='"+sulid+"']").children().length == 1){
+			loadMultis(id);
+		}
+
 		$('#'+sulid).toggle(400);
+
 	},
 	'click .multiul' : function(e){
 		e.stopPropagation();
@@ -786,9 +797,9 @@ function loadRefers(idMul, idCol){
 		var targetUl = idMul.replace('multili','referul');
 		var p = Prospectos.find({esMulti:false, asoMulti:idMul.replace('multili','')}).fetch();
 	}
-	console.log(p);
+	//console.log(p);
 
-	for (i = 0; i<p.length; i++){
+	for (var i = 0; i<p.length; i++){
 		var cli = '';
 		var cli = '<li class="referli">\
 			<h5>'+p[i].cedula+' - '+p[i].nombres+' '+p[i].apellidos+'</h5>\
@@ -839,4 +850,117 @@ function loadRefers(idMul, idCol){
 		$("[id='"+targetUl+"']").append(cli);
 		//$("[id='"+targetUl+"']").toggle(400);
 	}
+}
+
+function loadMultis(idCol){
+	var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+	var tipo = iusr[0].profile.tipo;
+
+	var targetUl = idCol.replace('cuadlli','multiul');
+	var p = Prospectos.find({esMulti:true, creadoPor:idCol.replace('cuadlli','')}).fetch();
+
+	for (var i = 0; i<p.length; i++){
+		var cli = '';
+		cli +='<li id="multili'+p[i].cedula+'" class="multili">\
+			<h5><a href=""><i>Multiplicador '+p[i].cedula+' - '+p[i].nombres+' '+p[i].apellidos+'</i></a></h5>\
+			<div class="optset">\
+				<button title="Ver detalles" cc="'+p[i].cedula+'" type="button" class="btn btn-info prdetail">\
+		    		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>\
+		    	</button>';
+		    	if(tipo !='Lider Cuadrante'){
+		        	cli+='<button title ="Cambiar Colab. cuadrante" cc="'+p[i].cedula+'" com="'+p[i].comuna+'" qd="'+p[i].cuadrante+'" type="button" data-toggle="modal" data-target="#multcuadlead" class="btn btn-primary changecuadlead">\
+		        		<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>\
+		        	</button>';
+		    	}
+		    	
+		    	if(tipo =='Lider Cuadrante'){
+		        	cli+='<button id="addrefer" title="Asignar referido" type="button" cc="'+p[i].cedula+'" value="mprosp" class="btn btn-success">\
+		        		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>\
+		        	</button>\
+		            <button title="Eliminar" cc="'+p[i].cedula+'" type="button" class="btn btn-danger multdelete">\
+		        		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>\
+		        	</button>';
+		        }
+		    	
+		    cli+='</div>\
+			<ul id="referul'+p[i].cedula+'" class="referul">\
+			</ul>\
+		</li>';
+		$("[id='"+targetUl+"']").append(cli);
+	}
+}
+
+function loadCuadl(pcuad){
+	var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+	var tipo = iusr[0].profile.tipo;
+	var cc = iusr[0].profile.cc;
+	var ocuad = pcuad.replace('cuadli','');
+
+	var targetUl = pcuad.replace('cuadli','cuadlul');
+	if(tipo == "Lider Cuadrante"){
+		var p = Meteor.users.find({'profile.cuad':ocuad,'profile.cc':cc}).fetch();
+	}
+	else if(tipo == "Lider Comuna"){
+		var p = Meteor.users.find({'profile.cuad':ocuad}).fetch();
+	}
+	else if(tipo == "Lider Zona"){
+		var p = Meteor.users.find({'profile.cuad':ocuad}).fetch();
+	}
+	else if(tipo == "techsup" || tipo == "admin"){
+		var p = Meteor.users.find({'profile.cuad':ocuad}).fetch();
+	}
+
+	console.log(p);
+
+	for (var i = 0; i<p.length; i++){
+		var c = Prospectos.find({creadoPor:p[i].profile.cc}).count();;
+		var cli = '';
+		cli+='<li id="cuadlli'+p[i].profile.cc+'" cc="'+p[i].profile.cc+'" class="cuadlli">\
+			<h5 class="lccuadli"><a href=""><i>\
+				Colab. Cuadrante - '+p[i].profile.cc+' - '+p[i].profile.nombres+' '+p[i].profile.apellidos+' - '+p[i].profile.email+'\
+			</i></a></h5>\
+			<div class="alert alert-info cprospects"><p>'+c+' Referidos</p></div>';
+			if(tipo !='Lider Cuadrante'){
+				cli+='<div class="optset">\
+					<button title="resetear colaborador" cc="'+p[i].profile.cc+'" type="button" class="btn btn-warning resetleader">\
+	            		<span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>\
+	            	</button>\
+					<button cc="'+p[i].profile.cc+'" type="button" class="btn btn-info coldetail">\
+	            		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>\
+	            	</button>\
+	            	<button title="Ver referidos" tipo="'+p[i].profile.tipo+'" zona="'+p[i].profile.zona+'" comu="'+p[i].profile.comu+'" cuad="'+p[i].profile.cuad+'" type="button" class="btn btn-default colprfilter">\
+	            		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>\
+	            	</button>\
+	            	<!--<button cc="'+p[i].profile.cc+'" type="button" class="btn btn-warning coledit">\
+	            		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>\
+	            	</button>-->\
+	            	<button cc="'+p[i].profile.cc+'" type="button" class="btn btn-danger coldelete">\
+	            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>\
+	            	</button>\
+	            </div>';
+	        }
+
+			cli+='<ul id="multiul'+p[i].profile.cc+'" class="multiul">\
+				<li id="multilicl'+p[i].profile.cc+'" class="multili notas">\
+					<h5><a href=""><i>Sin asignar</i></a></h5>\
+					<div class="optset">';
+			if(tipo =='Lider Cuadrante'){	
+            	cli+='<button id="addrefer" title="Añadir referido no asignado" type="button" cc="false" value="mprosp" class="btn btn-success">\
+            		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>\
+            	</button>';
+		    }
+	        cli+='</div>\
+					<ul id="referulcl'+p[i].profile.cc+'" class="referul">\
+					</ul>\
+				</li>\
+				</ul>\
+			</li>';
+
+		$("[id='"+targetUl+"']").append(cli);
+	};
+
+}
+
+function loadCuadrants(){
+
 }

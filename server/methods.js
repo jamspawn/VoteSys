@@ -147,32 +147,9 @@ Meteor.methods({
         return 'done';
       }
       else{
-        /*var origin = Prospectos.find({cedula:user.cc}).fetch()[0];
-        var id = Accounts.createUser({
-          username : user.cc,
-          //email: user.email,
-          password: user.keyp,
-          profile: { 
-            updated: false,
-            keyp : user.keyp,
-            tipo :'Multiplicador',
-            cc :user.cc,
-            email :origin.email,
-            zona :origin.zona,
-            comu :origin.comuna,
-            cuad :origin.cuadrante,
-            nombres:origin.nombres,
-            apellidos :origin.apellidos,
-            direccion :origin.direccion,
-            telefono :origin.telefono,
-            celular :origin.celular,
-            creadoPor :origin.creadoPor
-          }
-        });*/
 
         Prospectos.update({cedula:user.cc},{$set : {esMulti:true}});
 
-        //user.email = origin.email;
       }
       /*
       Email.send({

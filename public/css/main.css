@@ -260,6 +260,10 @@ footer p{
 	list-style-type: circle !important;
 }
 
+.multiul{
+	display: none;
+}
+
 .multiul li li{
 	list-style-type: none;
 }
