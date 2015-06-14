@@ -18,25 +18,6 @@ Template.rawreferlist.helpers({
 		return r;
 	},
 
-	'leadcomunecode' : function(areacode){
-		var q1 = Meteor.users.find({'profile.tipo':'Lider Comuna','profile.comu':areacode});
-
-		if(q1.count()>0){
-			q2 = q1.fetch()[0];
-			q3 = q1.fetch()[0].profile.updated;
-		}
-
-		if(q1.count()>0){
-			Session.set('currentMail', q2.profile.email);
-			var r = q2.profile.cc;
-		}
-		else{
-			var r = 'No asignado';
-		}
-		//var r = areacode.length;
-		return r;
-	},
-
 	'mailvalue' : function(){
 		return Session.get('currentMail');
 	},
@@ -365,6 +346,11 @@ Template.rawreferlist.events({
 	'click .zoneli' : function(e){
 		var id = $(e.currentTarget).attr('id');
 		var sulid = id.replace('zoneli','comuneul');
+
+		if($("[id='"+sulid+"']").children().length == 0){
+			loadComunes(id);
+		}
+
 		$('#'+sulid).toggle(400);
 	},
 	'click .comuneul' : function(e){
@@ -373,6 +359,11 @@ Template.rawreferlist.events({
 	'click .comuneli' : function(e){
 		var id = $(e.currentTarget).attr('id');
 		var sulid = id.replace('comuneli','cuadul');
+
+		if($("[id='"+sulid+"']").children().length == 0){
+			loadCuadrants(id);
+		}
+
 		$('#'+sulid).toggle(400);
 	},
 	'click .cuadul' : function(e){
@@ -910,7 +901,7 @@ function loadCuadl(pcuad){
 		var p = Meteor.users.find({'profile.cuad':ocuad}).fetch();
 	}
 
-	console.log(p);
+	//console.log(p);
 
 	for (var i = 0; i<p.length; i++){
 		var c = Prospectos.find({creadoPor:p[i].profile.cc}).count();;
@@ -919,7 +910,7 @@ function loadCuadl(pcuad){
 			<h5 class="lccuadli"><a href=""><i>\
 				Colab. Cuadrante - '+p[i].profile.cc+' - '+p[i].profile.nombres+' '+p[i].profile.apellidos+' - '+p[i].profile.email+'\
 			</i></a></h5>\
-			<div class="alert alert-info cprospects"><p>'+c+' Referidos</p></div>';
+			<div class="alert alert-info cprospects"><p>'+c+' R</p></div>';
 			if(tipo !='Lider Cuadrante'){
 				cli+='<div class="optset">\
 					<button title="resetear colaborador" cc="'+p[i].profile.cc+'" type="button" class="btn btn-warning resetleader">\
@@ -961,6 +952,172 @@ function loadCuadl(pcuad){
 
 }
 
-function loadCuadrants(){
+function loadCuadrants(comune){
+	//console.log(comune);
+	var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+	var tipo = iusr[0].profile.tipo;
+	var cc = iusr[0].profile.cc;
+	var ocomune = comune.replace('comuneli','');
 
+	var targetUl = comune.replace('comuneli','cuadul');
+
+	if(tipo == "Lider Cuadrante"){
+		var cuad = iusr[0].profile.cuad;
+		var p = Areas.find({tipo:'Cuadrante',codigo:cuad}).fetch();
+	}
+	else if(tipo == "Lider Comuna"){
+		var p = Areas.find({tipo:'Cuadrante',comuna:ocomune}).fetch();
+	}
+	else if(tipo == "Lider Zona"){
+		var p = Areas.find({tipo:'Cuadrante',comuna:ocomune}).fetch();
+	}
+	else if(tipo == "techsup" || tipo == "admin"){
+		var p = Areas.find({tipo:'Cuadrante',comuna:ocomune}).fetch();
+	}
+	//console.log(p);
+
+	for (var i = 0; i<p.length; i++){
+		var c = Prospectos.find({cuadrante:p[i].codigo}).count();
+		var cli = '';
+
+		cli+='<li id="cuadli'+p[i].codigo+'" class="cuadli">\
+			<h5 class="lccuad"><a href=""><i>'+p[i].tipo+' - '+p[i].codigo+' - '+p[i].descripcion+'</i></a></h5>\
+			<div class="alert alert-info cprospects"><p>'+c+' R</p></div>';
+			if(tipo !='Lider Cuadrante'){
+				cli+='<div class="optset">\
+					<button title="detalles area" cc="'+p[i].codigo+'" type="button" class="btn btn-info areadetail">\
+		        		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>\
+		        	</button>\
+		        	<button title="Ver referidos area" tipo="'+p[i].tipo+'" cc="'+p[i].codigo+'" type="button" class="btn btn-default prfilter">\
+		        		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>\
+		        	</button>';
+		        	if(tipo =='admin' || tipo=='techsup'){
+		            	cli+='<button title="eliminar area" cc="'+p[i].codigo+'" type="button" class="btn btn-danger areadelete">\
+		            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>\
+		            	</button>';
+		            }
+		        cli+='</div>';
+		    }
+			cli+='<ul id="cuadlul'+p[i].codigo+'" class="cuadlul">\
+			</ul>\
+		</li>';
+
+		$("[id='"+targetUl+"']").append(cli);
+	}
+}
+
+function loadComunes(pzone){
+
+	var iusr = Meteor.users.find({_id:Meteor.userId()}).fetch();
+	var tipo = iusr[0].profile.tipo;
+	var zone = iusr[0].profile.zona;
+	var comu = iusr[0].profile.comu;
+	var cuad = iusr[0].profile.cuad;
+
+	var ozone = pzone.replace('zoneli','');
+
+	var targetUl = pzone.replace('zoneli','comuneul');
+
+	if(tipo == "Lider Cuadrante"){
+		var p = Areas.find({tipo:'Comuna',codigo:comu}).fetch();
+	}
+	else if(tipo == "Lider Comuna"){
+		var p = Areas.find({tipo:'Comuna',codigo:comu}).fetch();
+	}
+	else if(tipo == "Lider Zona"){
+		var p = Areas.find({tipo:'Comuna',zona:zone}).fetch();
+	}
+	else if(tipo == "techsup" || tipo == "admin"){
+		var p = Areas.find({tipo:'Comuna',zona:ozone}).fetch();
+	}
+
+	for (var i = 0; i<p.length; i++){
+		var c = Prospectos.find({comuna:p[i].codigo}).count();
+		var liderCom = leadcomunecode(p[i].codigo);
+		var colaboradorData = colabtag(p[i].codigo);
+		var cli = '';
+
+		cli+='<li id="comuneli'+p[i].codigo+'" class="comuneli">\
+			<h5 class="lccomu"><a href=""><i>'+p[i].tipo+' - '+p[i].codigo+' - '+p[i].descripcion+'</i></a></h5>\
+			<div class="alert alert-info cprospects colabtag colabtag"><p>Comunal '+colaboradorData+' </p></div>\
+			<div class="alert alert-info cprospects"><p>'+c+' R</p></div>';
+			if(tipo =='admin' || tipo =='techsup' || tipo =='Lider Zona'){
+				cli+='<div class="optset">\
+					<button title="detalles colaborador" cc="'+liderCom+'" type="button" class="btn btn-info coldetail">\
+		        		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>\
+		        	</button>\
+					<button title="eliminar colaborador" cc="'+liderCom+'" type="button" class="btn btn-danger coldelete">\
+		        		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>\
+		        	</button>\
+					<button title="resetear colaborador" cc="'+liderCom+'" type="button" class="btn btn-warning resetleader">\
+		        		<span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>\
+		        	</button>\
+					<button title="detalles" cc="'+p[i].codigo+'" type="button" class="btn btn-info areadetail">\
+		        		<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>\
+		        	</button>\
+		        	<button title="Ver referidos area" tipo="'+p[i].tipo+'" cc="'+p[i].codigo+'" type="button" class="btn btn-default prfilter">\
+		        		<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>\
+		        	</button>';
+		        	if(tipo =='admin' || tipo=='techsup'){
+		            	cli+='<button title="eliminar area" cc="'+p[i].codigo+'" type="button" class="btn btn-danger areadelete">\
+		            		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>\
+		            	</button>';
+		            }
+		        cli+='</div>';
+		    }
+			cli+='<ul id="cuadul'+p[i].codigo+'" class="cuadul">\
+			</ul>\
+		</li>';
+
+		$("[id='"+targetUl+"']").append(cli);
+	}
+}
+
+function leadcomunecode(areacode){
+	console.log(areacode);
+	var q1 = Meteor.users.find({'profile.tipo':'Lider Comuna','profile.comu':areacode});
+
+	if(q1.count()>0){
+		q2 = q1.fetch()[0];
+		q3 = q1.fetch()[0].profile.updated;
+	}
+
+	if(q1.count()>0){
+		Session.set('currentMail', q2.profile.email);
+		var r = q2.profile.cc;
+	}
+	else{
+		var r = 'No asignado';
+	}
+	//var r = areacode.length;
+	return r;
+}
+
+function colabtag(areacode){
+	console.log(areacode);
+	if(areacode.length == 2){
+		var q1 = Meteor.users.find({'profile.tipo':'Lider Zona','profile.zona':areacode});
+	}
+	else if(areacode.length > 3 && areacode.length < 6){
+		var q1 = Meteor.users.find({'profile.tipo':'Lider Comuna','profile.comu':areacode});
+	}
+
+	if(q1.count()>0){
+		q2 = q1.fetch()[0];
+		q3 = q1.fetch()[0].profile.updated;
+	}
+
+	if(q1.count()>0){
+		if(q3 == true){
+			var r = q2.profile.nombres+' '+q2.profile.apellidos+' - '+q2.profile.celular+' / '+q2.profile.telefono;
+		}
+		else {
+			var r = 'No actualizado';
+		}	
+	}
+	else{
+		var r = 'No asignado';
+	}
+	//var r = areacode.length;
+	return r;
 }
