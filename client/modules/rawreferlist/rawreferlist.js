@@ -904,7 +904,7 @@ function loadCuadl(pcuad){
 	//console.log(p);
 
 	for (var i = 0; i<p.length; i++){
-		var c = Prospectos.find({creadoPor:p[i].profile.cc}).count();;
+		var c = Prospectos.find({creadoPor:p[i].profile.cc}).count();
 		var cli = '';
 		cli+='<li id="cuadlli'+p[i].profile.cc+'" cc="'+p[i].profile.cc+'" class="cuadlli">\
 			<h5 class="lccuadli"><a href=""><i>\
@@ -977,8 +977,15 @@ function loadCuadrants(comune){
 	//console.log(p);
 
 	for (var i = 0; i<p.length; i++){
-		var c = Prospectos.find({cuadrante:p[i].codigo}).count();
+		
 		var cli = '';
+		if(tipo == 'Lider Comuna' || tipo == 'Lider Zona' || tipo == 'admin' || tipo == 'techsup'){
+			var c = Prospectos.find({cuadrante:p[i].codigo}).count();
+		}
+		else{
+			c='';
+		}
+		
 
 		cli+='<li id="cuadli'+p[i].codigo+'" class="cuadli">\
 			<h5 class="lccuad"><a href=""><i>'+p[i].tipo+' - '+p[i].codigo+' - '+p[i].descripcion+'</i></a></h5>\
@@ -1032,7 +1039,13 @@ function loadComunes(pzone){
 	}
 
 	for (var i = 0; i<p.length; i++){
-		var c = Prospectos.find({comuna:p[i].codigo}).count();
+		if(tipo == 'Lider Zona' || tipo == 'admin' || tipo == 'techsup'){
+			var c = Prospectos.find({comuna:p[i].codigo}).count();
+		}
+		else{
+			c='';
+		}
+		
 		var liderCom = leadcomunecode(p[i].codigo);
 		var colaboradorData = colabtag(p[i].codigo);
 		var cli = '';

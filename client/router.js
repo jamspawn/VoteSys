@@ -7,6 +7,10 @@ Router.map(function(){
 		name : 'login'
 	});
 
+	this.route('/pereiracambia',{
+		name : 'pereiracambia'
+	})
+
 	this.route('/prospectos',{
 		name : 'prospectos'
 	});
